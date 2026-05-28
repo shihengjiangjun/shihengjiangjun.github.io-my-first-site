@@ -16,10 +16,10 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* 你的背景图 */
             background: url("失恒将军.jpg") no-repeat center center / cover;
             background-color: #222;
             color: #000;
+            user-select: none; /* 防止选中文字 */
         }
         .container {
             background: rgba(255, 255, 255, 0.8);
@@ -52,19 +52,8 @@
             opacity: 0.9;
             text-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
         }
-        /* 音乐播放器放在底部，半透明 */
-        .music-player {
-            position: fixed;
-            bottom: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            background: rgba(255,255,255,0.6);
-            padding: 8px 16px;
-            border-radius: 999px;
-            backdrop-filter: blur(4px);
-        }
         audio {
-            height: 32px;
+            display: none; /* 隐藏播放器 */
         }
     </style>
 </head>
@@ -75,12 +64,28 @@
         <div class="update-time" id="updateTime"></div>
     </div>
 
-    <!-- 背景音乐：失恒将军.mp3 -->
-    <div class="music-player">
-        <audio id="bgm" src="失恒将军.mp3" autoplay loop controls>
-    </div>
+    <!-- 背景音乐 -->
+    <audio id="bgm" src="失恒将军.mp3" loop>
 
     <script>
+        const audio = document.getElementById('bgm');
+        let hasPlayed = false; // 标记是否已经播放过
+
+        // 统一播放函数
+        function playBgm() {
+            if (hasPlayed) return;
+            hasPlayed = true;
+            audio.play().catch(e => console.log("播放失败：", e));
+        }
+
+        // 桌面端：点击
+        document.addEventListener('click', playBgm);
+
+        // 移动端：触摸、滑动
+        document.addEventListener('touchstart', playBgm);[[__LINK_ICON]](http://developer.mozilla.com/en-US/docs/Games/Techniques/Control_mechanisms/Mobile_touch?f_link_type=f_linkinlinenote&flow_extra=eyJkb2NfcG9zaXRpb24iOjAsImRvY19pZCI6IjNjMTlmMTI3NWMzMGNhMjgtNTEzNGE3ZWZkNzVkNjE2ZCIsImlubGluZV9kaXNwbGF5X3Bvc2l0aW9uIjowfQ%3D%3D "[__LINK_ICON]")
+        document.addEventListener('touchmove', playBgm);[[__LINK_ICON]](http://developer.mozilla.com/en-US/docs/Games/Techniques/Control_mechanisms/Mobile_touch?f_link_type=f_linkinlinenote&flow_extra=eyJkb2NfcG9zaXRpb24iOjAsImRvY19pZCI6IjNjMTlmMTI3NWMzMGNhMjgtNTEzNGE3ZWZkNzVkNjE2ZCIsImlubGluZV9kaXNwbGF5X3Bvc2l0aW9uIjowfQ%3D%3D "[__LINK_ICON]")
+
+        // 读取 data.json
         fetch('data.json')
             .then(response => response.json())
             .then(data => {
