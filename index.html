@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>更新网</title>
+    <title>我的远程更新网站</title>
     <style>
         * {
             margin: 0;
@@ -16,54 +16,50 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            /* 你的背景图，直接替换成你想用的图片链接就行 */
-            background: url("https://picsum.photos/1080/1920") no-repeat center center / cover;
+            background: url("https://ww1.sinaimg.cn/mw690/007QvzfIly1hx31761r51j30u01t0e81.jpg") no-repeat center center / cover;
             color: #fff;
         }
         .container {
-            /* 弹窗背景改为更通透的半透明，减少对背景的遮挡 */
-            background: rgba(255, 255, 255, 0.08);
-            /* 降低模糊强度，让背景更清晰 */
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
+            /* 重点：弹窗背景完全透明，不再有白色底色 */
+            background: transparent;
+            /* 只保留毛玻璃模糊，实现你要的朦胧感 */
+            backdrop-filter: blur(8px);
+            -webkit-backdrop-filter: blur(8px);
             padding: 40px 30px;
-            border-radius: 24px;
-            max-width: 85%;
+            border-radius: 20px;
+            max-width: 80%;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.15);
+            /* 去掉了边框，只留毛玻璃效果 */
         }
         h1 {
-            font-size: 3rem;
-            margin-bottom: 25px;
-            /* 加粗文字，用深色阴影增强可读性 */
-            text-shadow: 0 0 10px rgba(0, 0, 0, 0.9);
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
             font-weight: bold;
-            line-height: 1.3;
         }
         p {
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             line-height: 1.8;
             margin-bottom: 15px;
-            text-shadow: 0 0 8px rgba(0, 0, 0, 0.9);
-            font-weight: 500;
+            text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
+            white-space: pre-line;
         }
         .update-time {
-            margin-top: 35px;
-            font-size: 1.1rem;
+            margin-top: 30px;
+            font-size: 1rem;
             opacity: 0.9;
-            text-shadow: 0 0 6px rgba(0, 0, 0, 0.9);
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 id="title">认准官方失恒-148期（新澳）</h1>
+        <h1 id="title">欢迎来到我的网站！</h1>
         <p id="content"></p>
         <div class="update-time" id="updateTime"></div>
     </div>
 
     <script>
-        // 从 data.json 加载内容
         fetch('data.json')
             .then(response => response.json())
             .then(data => {
