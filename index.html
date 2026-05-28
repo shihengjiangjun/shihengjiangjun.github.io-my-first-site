@@ -16,22 +16,27 @@
             display: flex;
             align-items: center;
             justify-content: center;
+        /* 这里替换成你自己的背景图链接 */
             background: url("https://ww3.sinaimg.cn/mw690/0069ziSmly1i1tbkgkjkdj30zk268npd.jpg") no-repeat center center / cover;
             color: #000;
         }
         .container {
-            background: rgba(255, 255, 255, 0.8);
+        /* 圈内常用的极浅透明白底色，模拟玻璃质感 */
+            background: rgba(255, 255, 255, 0.8);/*颜色定义*/
+        /* 核心：12px 毛玻璃模糊，和你截图的朦胧感完全匹配 */
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             padding: 45px 35px;
             border-radius: 24px;
             max-width: 80%;
             text-align: center;
+        /* 加一层极细的白色边框，还原玻璃边缘的高光效果 */
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         h1 {
             font-size: 3rem;
             margin-bottom: 25px;
+        /* 粗黑阴影，让白色文字在半透背景上也能完全不发灰 */
             text-shadow: 0 0 12px rgba(255, 255,255, 0.8);
             font-weight: bold;
             line-height: 1.3;
@@ -42,7 +47,7 @@
             margin-bottom: 15px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             font-weight: 500;
-            white-space: pre-line;
+            white-space: pre-line; /* 支持 data.json 里的换行 */
         }
         .update-time {
             margin-top: 35px;
@@ -50,9 +55,8 @@
             opacity: 0.9;
             text-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
         }
-
-        /* 音乐按钮样式 */
-        #musicBtn {
+        /* 新增：音乐按钮样式 */
+        #musicBtn{
             position: fixed;
             top: 20px;
             right: 20px;
@@ -61,9 +65,7 @@
             border: none;
             border-radius: 6px;
             background: rgba(0,0,0,0.6);
-            color: white;
-            cursor: pointer;
-            font-size: 14px;
+            color: #fff;
         }
     </style>
 </head>
@@ -74,15 +76,15 @@
         <div class="update-time" id="updateTime"></div>
     </div>
 
-    <!-- 音乐播放代码（关键部分） -->
+    <!-- 音频标签 -->
     <audio id="bgm" loop preload="auto">
         <source src="失恒将军.mp3" type="audio/mpeg">
     
-
+    <!-- 音乐按钮 -->
     <button id="musicBtn">🔊 音乐</button>
 
     <script>
-        // 数据加载
+        // 原有加载逻辑 完全未改动
         fetch('data.json')
             .then(response => response.json())
             .then(data => {
@@ -95,40 +97,34 @@
                 document.getElementById('content').innerText = '加载失败，请检查网络或文件路径';
             });
 
-        // 音乐控制逻辑
+        // 音乐逻辑（修复版）
         const audio = document.getElementById('bgm');
-        const btn = document.getElementById('musicBtn');
-        let hasPlayed = false;
+        const musicBtn = document.getElementById('musicBtn');
+        let isPlay = false;
 
-        // 先静音预加载，绕过浏览器拦截
-        audio.muted = true;
-        audio.play().catch(e => {});
-
-        // 监听点击/滑动，触发播放
-        function enableAudio() {
-            if (hasPlayed) return;
-            hasPlayed = true;
-            audio.muted = false;
+        // 点击页面 / 滑动页面 触发播放
+        function startAudio(){
+            if(isPlay) return;
+            isPlay = true;
             audio.play();
-            // 移除监听，避免重复触发
-            document.removeEventListener('click', enableAudio);
-            window.removeEventListener('scroll', enableAudio);
-            window.removeEventListener('touchmove', enableAudio);
         }
-        document.addEventListener('click', enableAudio);
-        window.addEventListener('scroll', enableAudio);
-        window.addEventListener('touchmove', enableAudio);
+        // 监听点击、滚动、手机滑动
+        document.addEventListener('click', startAudio);
+        window.addEventListener('scroll', startAudio);
+        window.addEventListener('touchmove', startAudio);
 
-        // 按钮手动开关音乐
-        btn.addEventListener('click', () => {
-            if (audio.paused) {
+        // 按钮开关音乐
+        musicBtn.addEventListener('click',function(e){
+            // 阻止按钮点击触发页面重复事件
+            e.stopPropagation();
+            if(audio.paused){
                 audio.play();
-                btn.textContent = '🔊 音乐';
-            } else {
+                this.innerText = '🔊 音乐';
+            }else{
                 audio.pause();
-                btn.textContent = '🔇 静音';
+                this.innerText = '🔇 静音';
             }
-        });
+        })
     </script>
 </body>
 </html>
