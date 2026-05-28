@@ -16,23 +16,27 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            /* 这里替换成你自己的背景图链接 */
             background: url("https://ww3.sinaimg.cn/mw690/0069ziSmly1i1tbkgkjkdj30zk268npd.jpg") no-repeat center center / cover;
             color: #000;
-            padding: 20px 0;
         }
         .container {
-            background: rgba(255, 255, 255, 0.8);
+            /* 圈内常用的极浅透明白底色，模拟玻璃质感 */
+            background: rgba(255, 255, 255, 0.8);/*颜色定义*/
+            /* 核心：12px 毛玻璃模糊，和你截图的朦胧感完全匹配 */
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
             padding: 45px 35px;
             border-radius: 24px;
             max-width: 80%;
             text-align: center;
+            /* 加一层极细的白色边框，还原玻璃边缘的高光效果 */
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         h1 {
             font-size: 3rem;
             margin-bottom: 25px;
+            /* 粗黑阴影，让白色文字在半透背景上也能完全不发灰 */
             text-shadow: 0 0 12px rgba(255, 255,255, 0.8);
             font-weight: bold;
             line-height: 1.3;
@@ -43,36 +47,13 @@
             margin-bottom: 15px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
             font-weight: 500;
-            white-space: pre-line;
+            white-space: pre-line; /* 支持 data.json 里的换行 */
         }
         .update-time {
             margin-top: 35px;
             font-size: 1.1rem;
             opacity: 0.9;
             text-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
-        }
-        #musicBtn{
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            z-index: 9999;
-            padding: 8px 12px;
-            border: none;
-            border-radius: 6px;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-        }
-        /* 闹钟样式 */
-        .clock-box {
-            margin-top: 30px;
-            width: 100%;
-        }
-        .clock-iframe {
-            width: 100%;
-            height: 240px;
-            border: 1px solid rgba(255,255,255,0.3);
-            border-radius: 12px;
-            backdrop-filter: blur(6px);
         }
     </style>
 </head>
@@ -81,20 +62,7 @@
         <h1 id="title">认准官方失恒-148期（新澳）</h1>
         <p id="content"></p>
         <div class="update-time" id="updateTime"></div>
-
-        <!-- 你的闹钟网址已经写死在这里 -->
-        <div class="clock-box">
-            <iframe class="clock-iframe"
-                    src="https://ykkeajt.3kn5v-yh5pi-hgkfnu.work/iframe/3/0.html"
-                    sandbox="allow-scripts allow-same-origin">
-            </iframe>
-        </div>
     </div>
-
-    <audio id="bgm" loop preload="auto">
-        <source src="失恒将军.mp3" type="audio/mpeg">
-    
-    <button id="musicBtn">🔊 音乐</button>
 
     <script>
         fetch('data.json')
@@ -108,30 +76,6 @@
                 console.error('加载失败:', error);
                 document.getElementById('content').innerText = '加载失败，请检查网络或文件路径';
             });
-
-        const audio = document.getElementById('bgm');
-        const musicBtn = document.getElementById('musicBtn');
-        let isPlay = false;
-
-        function startAudio(){
-            if(isPlay) return;
-            isPlay = true;
-            audio.play();
-        }
-        document.addEventListener('click', startAudio);
-        window.addEventListener('scroll', startAudio);
-        window.addEventListener('touchmove', startAudio);
-
-        musicBtn.addEventListener('click',function(e){
-            e.stopPropagation();
-            if(audio.paused){
-                audio.play();
-                this.innerText = '🔊 音乐';
-            }else{
-                audio.pause();
-                this.innerText = '🔇 静音';
-            }
-        })
     </script>
 </body>
 </html>
