@@ -9,54 +9,51 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: "微软雅黑", sans-serif;
         }
         body {
-            font-family: "Microsoft Yahei", sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: url("https://ww1.sinaimg.cn/mw690/007QvzfIly1hx31761r51j30u01t0e81.jpg") no-repeat center center / cover;
-            color: #fff;
-        }
-        .container {
-            /* 重点：弹窗背景完全透明，不再有白色底色 */
-            background: transparent;
-            /* 只保留毛玻璃模糊，实现你要的朦胧感 */
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            padding: 40px 30px;
-            border-radius: 20px;
-            max-width: 80%;
+            /* 直接用你发的新浪图做全屏背景 */
+            background: url("https://https://ww1.sinaimg.cn/mw690/007QvzfIly1hx31761r51j30u01t0e81.jpg") no-repeat center center;
+            background-size: cover;       /* 全屏铺满 */
+            background-attachment: fixed; /* 固定不滚动 */
             text-align: center;
-            /* 去掉了边框，只留毛玻璃效果 */
+            padding: 50px 20px;
+            min-height: 100vh;
+            /* 动漫风暗一点、柔和一点 */
+            filter: brightness(0.75) contrast(1.1) saturate(1.2);
+        }
+        .box {
+            /* 半透明磨砂白框，字看得清 */
+            background: rgba(255, 255, 255, 0.18);
+            backdrop-filter: blur(10px);
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 16px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+            border: 1px solid rgba(255,255,255,0.25);
         }
         h1 {
-            font-size: 2.5rem;
+            color: #fff;
             margin-bottom: 20px;
-            text-shadow: 0 0 8px rgba(0, 0, 0, 0.8);
-            font-weight: bold;
+            text-shadow: 0 0 8px rgba(0,0,0,0.5);
         }
         p {
-            font-size: 1.3rem;
-            line-height: 1.8;
+            color: #f1f1f1;
+            font-size: 18px;
             margin-bottom: 15px;
-            text-shadow: 0 0 6px rgba(0, 0, 0, 0.8);
-            white-space: pre-line;
+            text-shadow: 0 0 6px rgba(0,0,0,0.4);
         }
-        .update-time {
-            margin-top: 30px;
-            font-size: 1rem;
-            opacity: 0.9;
-            text-shadow: 0 0 4px rgba(0, 0, 0, 0.8);
+        .loading {
+            color: #ccc;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="title">欢迎来到我的网站！</h1>
-        <p id="content"></p>
-        <div class="update-time" id="updateTime"></div>
+    <div class="box">
+        <h1 id="title" class="loading">加载中...</h1>
+        <p id="content" class="loading">加载中...</p>
+        <p id="time" class="loading">加载中...</p>
     </div>
 
     <script>
@@ -65,11 +62,11 @@
             .then(data => {
                 document.getElementById('title').innerText = data.title;
                 document.getElementById('content').innerText = data.content;
-                document.getElementById('updateTime').innerText = `更新时间：${data.updateTime}`;
+                document.getElementById('time').innerText = "更新时间：" + data.updateTime;
             })
             .catch(error => {
-                console.error('加载失败:', error);
-                document.getElementById('content').innerText = '加载失败，请检查网络或文件路径';
+                document.getElementById('title').innerText = "加载失败";
+                document.getElementById('content').innerText = "请检查data.json文件是否存在";
             });
     </script>
 </body>
