@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新网</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft Yahei", sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* 你的背景图 */
+            background: url("https://ww1.sinaimg.cn/mw690/007QvzfIly1hx31761r51j30u01t0e81.jpg") no-repeat center center / cover;
+            color: #fff;
+        }
+        .container {
+            /* 半透明毛玻璃背景，和截图效果一致 */
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px); /* 兼容Safari */
+            padding: 30px;
+            border-radius: 20px; /* 大圆角，和截图匹配 */
+            max-width: 80%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2); /* 加个细微边框更有质感 */
+        }
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.7);
+        }
+        p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-shadow: 0 0 6px rgba(0, 0, 0, 0.7);
+        }
+        .update-time {
+            margin-top: 30px;
+            font-size: 0.9rem;
+            opacity: 0.8;
+            text-shadow: 0 0 4px rgba(0, 0, 0, 0.7);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 id="title">欢迎使用</h1>
+        <p id="content"></p>
+        <div class="update-time" id="updateTime"></div>
+    </div>
+
+    <script>
+        // 从 data.json 加载内容
+        fetch('data.json')
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('title').innerText = data.title;
+                document.getElementById('content').innerText = data.content;
+                document.getElementById('updateTime').innerText = `更新时间：${data.updateTime}`;
+            })
+            .catch(error => {
+                console.error('加载失败:', error);
+                document.getElementById('content').innerText = '加载失败，请检查网络或文件路径';
+            });
+    </script>
+</body>
+</html>
+
