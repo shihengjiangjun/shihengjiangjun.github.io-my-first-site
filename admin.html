@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>后台控制中心</title>
+    <title>后台管理</title>
     <style>
         * {
             margin: 0;
@@ -40,19 +40,23 @@
             margin-bottom: 10px;
             font-size: 1.1rem;
         }
-        label {
-            display: inline-block;
-            width: 90px;
+        .row {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .row label {
+            width: 70px;
             font-size: 15px;
         }
-        input, select {
-            padding: 8px;
-            width: calc(100% - 100px);
-            max-width: 220px;
-            font-size: 15px;
-            border-radius: 4px;
+        .row input, .row select {
+            padding: 6px;
+            width: 100px;
+            font-size: 14px;
             border: none;
-            margin: 6px 0;
+            border-radius: 4px;
         }
         button {
             padding: 9px 18px;
@@ -62,10 +66,18 @@
             cursor: pointer;
             margin: 4px;
         }
-        .btn-red { background: #e74c3c; color:#fff; }
-        .btn-blue { background: #3498db; color:#fff; }
-        .btn-green { background: #27ae60; color:#fff; }
-        .btn-normal { background: #999; color:#fff; }
+        .btn-save {
+            background: #e74c3c;
+            color: #fff;
+        }
+        .btn-time {
+            background: #999;
+            color: #fff;
+        }
+        .btn-clear {
+            background: #3498db;
+            color: #fff;
+        }
         .record-list {
             margin-top: 20px;
             max-height: 300px;
@@ -83,135 +95,237 @@
 </head>
 <body>
     <div class="admin-box">
-        <h2>比赛后台控制（6普通球 + 1特别球）</h2>
+        <h2>赛事数据后台</h2>
 
-        <!-- 倒计时控制 -->
+        <!-- 倒计时设置区域 -->
         <div class="ctrl-group">
-            <h3>倒计时设置</h3>
-            <label>倒计时秒数：</label>
-            <input type="number" id="cdSecond" value="180">
-            <button class="btn-normal" onclick="setCountdown()">应用倒计时</button>
+            <h3>全局倒计时设置</h3>
+            <div class="row">
+                <label>小时：</label>
+                <input type="number" id="hour" value="0" min="0" max="23">
+                <label>分钟：</label>
+                <input type="number" id="minute" value="3" min="0" max="59">
+                <button class="btn-time" onclick="setTime()">应用倒计时</button>
+            </div>
         </div>
 
-        <!-- 手动设置结果 -->
+        <!-- 7组球独立设置：号码 + 姓名 + 颜色 -->
         <div class="ctrl-group">
-            <h3>手动设置开奖结果</h3>
-            <label>选择球号(01-07)：</label>
-            <input type="text" id="setBall" placeholder="例如：01">
+            <h3>每球数据设置（号码1-49，允许重复）</h3>
+            <div class="row">
+                <label>第1球：</label>
+                <input type="text" id="n1" placeholder="号码">
+                <input type="text" id="name1" placeholder="选手名">
+                <select id="color1">
+                    <option value="red">红色</option>
+                    <option value="blue">蓝色</option>
+                    <option value="green">绿色</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>第2球：</label>
+                <input type="text" id="n2" placeholder="号码">
+                <input type="text" id="name2" placeholder="选手名">
+                <select id="color2">
+                    <option value="red">红色</option>
+                    <option value="blue">蓝色</option>
+                    <option value="green">绿色</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>第3球：</label>
+                <input type="text" id="n3" placeholder="号码">
+                <input type="text" id="name3" placeholder="选手名">
+                <select id="color3">
+                    <option value="red">红色</option>
+                    <option value="blue">蓝色</option>
+                    <option value="green">绿色</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>第4球：</label>
+                <input type="text" id="n4" placeholder="号码">
+                <input type="text" id="name4" placeholder="选手名">
+                <select id="color4">
+                    <option value="red">红色</option>
+                    <option value="blue">蓝色</option>
+                    <option value="green">绿色</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>第5球：</label>
+                <input type="text" id="n5" placeholder="号码">
+                <input type="text" id="name5" placeholder="选手名">
+                <select id="color5">
+                    <option value="red">红色</option>
+                    <option value="blue">蓝色</option>
+                    <option value="green">绿色</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>第6球：</label>
+                <input type="text" id="n6" placeholder="号码">
+                <input type="text" id="name6" placeholder="选手名">
+                <select id="color6">
+                    <option value="red">红色</option>
+                    <option value="blue">蓝色</option>
+                    <option value="green">绿色</option>
+                </select>
+            </div>
+            <div class="row">
+                <label>特别球：</label>
+                <input type="text" id="n7" placeholder="号码">
+                <input type="text" id="name7" placeholder="选手名">
+                <select id="color7">
+                    <option value="red">红色</option>
+                    <option value="blue">蓝色</option>
+                    <option value="green">绿色</option>
+                </select>
+            </div>
             <br>
-            <label>选择颜色：</label>
-            <select id="setColor">
-                <option value="red">红色</option>
-                <option value="blue">蓝色</option>
-                <option value="green">绿色</option>
-            </select>
-            <br>
-            <label>选手姓名：</label>
-            <input type="text" id="setPlayer" placeholder="填写选手名字">
-            <br>
-            <button class="btn-red" onclick="submitResult()">提交结果并同步前台</button>
+            <button class="btn-save" onclick="saveData()">提交全部数据</button>
         </div>
 
-        <!-- 记录管理 -->
+        <!-- 记录清空 -->
         <div class="ctrl-group">
-            <h3>记录管理</h3>
-            <button class="btn-blue" onclick="clearRecord()">清空所有记录</button>
+            <h3>记录操作</h3>
+            <button class="btn-clear" onclick="clearAll()">清空所有数据与记录</button>
         </div>
 
-        <!-- 全部记录 -->
-        <div class="record-list" id="adminRecord">
+        <!-- 历史记录展示 -->
+        <div class="record-list" id="recordBox">
             <div>暂无记录</div>
         </div>
     </div>
 
     <script>
-        const totalBall = 7;
-        let allRecord = [];
-        let countdownNum = 180;
-
-        // 页面加载读取本地数据
+        let recordArr = [];
         window.onload = function(){
-            const local = localStorage.getItem('ballRecord');
-            if(local){
-                allRecord = JSON.parse(local);
-                renderAdminRecord();
+            let oldRec = localStorage.getItem("gameRecord");
+            if(oldRec){
+                recordArr = JSON.parse(oldRec);
+                renderRecord();
             }
         }
 
-        // 设置倒计时
-        function setCountdown(){
-            let val = parseInt(document.getElementById('cdSecond').value);
-            if(isNaN(val) || val < 0) val = 180;
-            countdownNum = val;
-            localStorage.setItem('countdownNum', countdownNum);
-            alert("倒计时已同步到前台！");
-        }
-
-        // 提交结果（手动指定球号/颜色/选手）
-        function submitResult(){
-            let ballNum = document.getElementById('setBall').value.trim();
-            let color = document.getElementById('setColor').value;
-            let player = document.getElementById('setPlayer').value.trim();
-
-            // 校验球号 01-07
-            let num = parseInt(ballNum);
-            if(isNaN(num) || num < 1 || num > 7){
-                alert("请输入合法球号：01 ~ 07");
+        // 设置倒计时总秒数
+        function setTime(){
+            let h = parseInt(document.getElementById("hour").value) || 0;
+            let m = parseInt(document.getElementById("minute").value) || 0;
+            if(m < 0 || m > 59){
+                alert("分钟请填写 0 - 59");
                 return;
             }
-            ballNum = String(num).padStart(2,'0');
-
-            // 当前时间
-            const now = new Date();
-            const timeStr = `${now.getHours().toString().padStart(2,0)}:${now.getMinutes().toString().padStart(2,0)}:${now.getSeconds().toString().padStart(2,0)}`;
-
-            // 保存当前结果（前台展示用）
-            const currentRes = {
-                ballNum: ballNum,
-                color: color,
-                player: player || "未填写选手"
-            };
-            localStorage.setItem('currentResult', JSON.stringify(currentRes));
-
-            // 存入历史记录
-            allRecord.push({
-                ballNum: ballNum,
-                player: player || "未填写选手",
-                time: timeStr
-            });
-            localStorage.setItem('ballRecord', JSON.stringify(allRecord));
-
-            renderAdminRecord();
-            alert("结果已提交，前台实时更新！");
-
-            // 清空输入
-            document.getElementById('setBall').value = '';
-            document.getElementById('setPlayer').value = '';
+            let total = h * 3600 + m * 60;
+            localStorage.setItem("countTotal", total);
+            alert("倒计时已同步前台！");
         }
 
-        // 渲染后台记录列表
-        function renderAdminRecord(){
-            const box = document.getElementById('adminRecord');
-            if(allRecord.length === 0){
+        // 号码校验：1~49，允许重复
+        function checkNum(val){
+            let num = parseInt(val);
+            return !isNaN(num) && num >= 1 && num <= 49;
+        }
+
+        // 提交保存所有球数据
+        function saveData(){
+            let numList = [
+                document.getElementById("n1").value,
+                document.getElementById("n2").value,
+                document.getElementById("n3").value,
+                document.getElementById("n4").value,
+                document.getElementById("n5").value,
+                document.getElementById("n6").value,
+                document.getElementById("n7").value
+            ];
+            let nameList = [
+                document.getElementById("name1").value || "未知选手",
+                document.getElementById("name2").value || "未知选手",
+                document.getElementById("name3").value || "未知选手",
+                document.getElementById("name4").value || "未知选手",
+                document.getElementById("name5").value || "未知选手",
+                document.getElementById("name6").value || "未知选手",
+                document.getElementById("name7").value || "未知选手"
+            ];
+            let colorList = [
+                document.getElementById("color1").value,
+                document.getElementById("color2").value,
+                document.getElementById("color3").value,
+                document.getElementById("color4").value,
+                document.getElementById("color5").value,
+                document.getElementById("color6").value,
+                document.getElementById("color7").value
+            ];
+
+            // 逐行校验号码
+            for(let i = 0; i < 7; i++){
+                if(!checkNum(numList[i])){
+                    alert(`第${i+1}球号码错误，请填写 1 ~ 49`);
+                    return;
+                }
+            }
+
+            // 组装数据
+            let ballData = [];
+            for(let i = 0; i < 7; i++){
+                ballData.push({
+                    num: String(parseInt(numList[i])).padStart(2,'0'),
+                    name: nameList[i],
+                    color: colorList[i]
+                });
+            }
+            localStorage.setItem("ballAllData", JSON.stringify(ballData));
+
+            // 单独取第7个特别球 用于顶部方块展示 + 记录
+            let specialBall = ballData[6];
+            let now = new Date();
+            let timeStr = `${now.getHours().toString().padStart(2,0)}:${now.getMinutes().toString().padStart(2,0)}:${now.getSeconds().padStart(2,0)}`;
+
+            let currentRes = {
+                num: specialBall.num,
+                name: specialBall.name,
+                color: specialBall.color
+            };
+            localStorage.setItem("currentResult", JSON.stringify(currentRes));
+
+            // 写入历史记录
+            recordArr.push({
+                num: specialBall.num,
+                name: specialBall.name,
+                color: specialBall.color,
+                time: timeStr
+            });
+            localStorage.setItem("gameRecord", JSON.stringify(recordArr));
+            renderRecord();
+
+            alert("数据提交成功，前台已同步！");
+        }
+
+        // 渲染历史记录
+        function renderRecord(){
+            let box = document.getElementById("recordBox");
+            if(recordArr.length === 0){
                 box.innerHTML = "<div>暂无记录</div>";
                 return;
             }
-            let html = '';
-            allRecord.forEach((item,idx)=>{
+            let html = "";
+            recordArr.forEach((item, idx)=>{
                 html += `<div class="record-item">
-                    第${idx+1}轮 | 球号：${item.ballNum} | 选手：${item.player} | 时间：${item.time}
+                    第${idx+1}轮 | 特别球：${item.num} | 选手：${item.name} | 颜色：${item.color} | 时间：${item.time}
                 </div>`;
             });
             box.innerHTML = html;
         }
 
-        // 清空记录
-        function clearRecord(){
-            allRecord = [];
-            localStorage.removeItem('ballRecord');
-            localStorage.removeItem('currentResult');
-            renderAdminRecord();
-            alert("所有记录已清空");
+        // 清空全部数据
+        function clearAll(){
+            recordArr = [];
+            localStorage.removeItem("gameRecord");
+            localStorage.removeItem("currentResult");
+            localStorage.removeItem("ballAllData");
+            localStorage.removeItem("countTotal");
+            renderRecord();
+            alert("所有数据、记录、倒计时已清空！");
         }
     </script>
 </body>
