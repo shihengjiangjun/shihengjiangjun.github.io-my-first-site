@@ -57,7 +57,7 @@
             display: none;
         }
 
-        /* 新增功能区域样式，不影响原有样式 */
+        /* 倒计时样式 */
         .countdown-box {
             margin: 30px auto 20px;
             background: rgba(0,0,0,0.7);
@@ -75,35 +75,8 @@
             font-weight: bold;
             color: #ffd700;
         }
-        .result-panel {
-            width: 140px;
-            height: 140px;
-            background: #fff;
-            border-radius: 12px;
-            margin: 15px auto;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            border: 3px solid #333;
-        }
-        .current-ball {
-            width: 65px;
-            height: 65px;
-            border-radius: 50%;
-            color: #fff;
-            font-size: 24px;
-            line-height: 65px;
-            font-weight: bold;
-            margin-bottom: 8px;
-        }
-        .current-ball.red { background: #e74c3c; }
-        .current-ball.blue { background: #3498db; }
-        .current-ball.green { background: #27ae60; }
-        .current-player {
-            font-size: 1rem;
-            color: #333;
-        }
+
+        /* 7个圆球布局 */
         .ball-wrap {
             display: flex;
             flex-wrap: wrap;
@@ -128,56 +101,27 @@
             border: 2px solid #fff;
             margin-bottom: 6px;
         }
-        .ball.special {
-            border: 2px solid gold;
-        }
         .ball-desc {
             width: 60px;
             font-size: 12px;
             text-align: center;
             word-break: break-all;
         }
-        .record-list {
-            margin: 20px auto 0;
-            text-align: left;
-            max-width: 900px;
-            max-height: 220px;
-            overflow-y: auto;
-            padding: 15px;
-            background: rgba(255,255,255,0.6);
-            border-radius: 12px;
-        }
-        .record-item {
-            font-size: 0.95rem;
-            line-height: 1.8;
-            border-bottom: 1px dashed #999;
-        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- 原有区域：读取data.json文字 + 原有时间 -->
         <h1 id="title"></h1>
         <p id="content"></p>
         <div class="update-time" id="updateTime"></div>
 
-        <!-- 新增区域：倒计时 + 特别球方块 -->
         <div class="countdown-box">
             <div class="countdown-title">下一场开球倒计时</div>
             <div class="countdown-time" id="countdown">00:00:00</div>
-            <div class="result-panel">
-                <div class="current-ball" id="currentBall">--</div>
-                <div class="current-player" id="currentPlayer">特别球</div>
-            </div>
         </div>
 
-        <!-- 新增区域：7个彩色圆圈（号码+名字） -->
+        <!-- 7个球容器 -->
         <div class="ball-wrap" id="ballWrap"></div>
-
-        <!-- 新增区域：历史记录 -->
-        <div class="record-list" id="recordList">
-            <div class="record-item">暂无开球记录</div>
-        </div>
     </div>
 
     <audio id="bgm" loop>
@@ -185,8 +129,7 @@
     
 
     <script>
-        // ========== 原有代码 完全保留 未做任何修改 ==========
-        // 读取 data.json 数据
+        // 加载data.json文字内容
         fetch('data.json')
             .then(res => res.json())
             .then(data => {
@@ -197,7 +140,7 @@
                 document.getElementById('content').innerText = "加载失败，请检查文件";
             });
 
-        // 实时时间（时:分:秒）
+        // 系统当前时间
         function showTime() {
             const now = new Date();
             let h = String(now.getHours()).padStart(2, '0');
@@ -208,7 +151,7 @@
         showTime();
         setInterval(showTime, 1000);
 
-        // 点击/滑动播放音乐，仅触发一次
+        // 背景音乐播放
         const audio = document.getElementById('bgm');
         let isPlay = false;
         function playAudio() {
@@ -219,17 +162,15 @@
         document.addEventListener('click', playAudio);
         document.addEventListener('touchmove', playAudio);
 
-        // ========== 新增功能代码（球、倒计时、数据同步） ==========
-        // 初始化7个球容器
-        function initBallDom(){
+        // 初始化7个圆圈
+        function initBallDom() {
             const wrap = document.getElementById("ballWrap");
             wrap.innerHTML = "";
-            for(let i = 0; i < 7; i++){
+            for (let i = 0; i < 7; i++) {
                 let item = document.createElement("div");
                 item.className = "ball-item";
                 let circle = document.createElement("div");
                 circle.className = "ball";
-                if(i === 6) circle.classList.add("special");
                 let desc = document.createElement("div");
                 desc.className = "ball-desc";
                 item.appendChild(circle);
@@ -238,82 +179,55 @@
             }
         }
 
-        // 实时倒计时 每秒递减
-        function runCountdown(){
+        // 倒计时运行
+        function runCountdown() {
             let total = parseInt(localStorage.getItem("countTotal")) || 0;
-            if(total <= 0){
+            if (total <= 0) {
                 document.getElementById("countdown").innerText = "00:00:00";
                 return;
             }
             let h = Math.floor(total / 3600);
             let m = Math.floor((total % 3600) / 60);
             let s = total % 60;
-            document.getElementById("countdown").innerText = 
-                `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+            document.getElementById("countdown").innerText =
+                `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
             total--;
             localStorage.setItem("countTotal", total);
         }
 
-        // 同步7个球：号码、名称、圆圈颜色
-        function syncBallData(){
+        // 同步后台数据：号码+号、颜色、选手名
+        function syncBallData() {
             let data = localStorage.getItem("ballAllData");
-            if(!data) return;
+            if (!data) return;
             let list = JSON.parse(data);
             let items = document.querySelectorAll(".ball-item");
-            items.forEach((el, idx)=>{
-                let circle = el.querySelector(".ball");
-                let desc = el.querySelector(".ball-desc");
-                circle.innerText = list[idx].num;
-                if(list[idx].color === "red") circle.style.background = "#e74c3c";
-                else if(list[idx].color === "blue") circle.style.background = "#3498db";
-                else circle.style.background = "#27ae60";
-                desc.innerText = list[idx].name;
-            });
-        }
-
-        // 同步倒计时下方正方形（仅展示第7个特别球）
-        function syncCurrentResult(){
-            let res = localStorage.getItem("currentResult");
-            if(!res) return;
-            let obj = JSON.parse(res);
-            let ballDom = document.getElementById("currentBall");
-            let nameDom = document.getElementById("currentPlayer");
-            ballDom.innerText = obj.num;
-            ballDom.className = `current-ball ${obj.color}`;
-            nameDom.innerText = obj.name;
-        }
-
-        // 同步历史记录
-        function syncRecord(){
-            let rec = localStorage.getItem("gameRecord");
-            let box = document.getElementById("recordList");
-            if(!rec){
-                box.innerHTML = '<div class="record-item">暂无开球记录</div>';
-                return;
+            for (let i = 0; i < 7; i++) {
+                if (!list[i]) continue;
+                let circle = items[i].querySelector(".ball");
+                let desc = items[i].querySelector(".ball-desc");
+                // 数字后面加 +
+                circle.innerText = list[i].num + "+";
+                // 对应颜色
+                if (list[i].color === "red") {
+                    circle.style.background = "#e74c3c";
+                } else if (list[i].color === "blue") {
+                    circle.style.background = "#3498db";
+                } else {
+                    circle.style.background = "#27ae60";
+                }
+                // 显示选手名字
+                desc.innerText = list[i].name;
             }
-            let arr = JSON.parse(rec);
-            let html = "";
-            arr.forEach((item, idx)=>{
-                html += `<div class="record-item">
-                    第${idx+1}轮 | 特别球：${item.num} | 选手：${item.name} | 颜色：${item.color} | 时间：${item.time}
-                </div>`;
-            });
-            box.innerHTML = html;
         }
 
-        // 页面加载完成初始化 + 定时刷新数据
-        window.onload = function(){
-            initBallDom();
-            runCountdown();
-            syncBallData();
-            syncCurrentResult();
-            syncRecord();
-
-            setInterval(runCountdown, 1000);
-            setInterval(syncBallData, 1000);
-            setInterval(syncCurrentResult, 1000);
-            setInterval(syncRecord, 1000);
-        }
-    </script>
-</body>
-</html>
+        // 页面加载执行
+        window.onload = function () {
+             initBallDom();
+             runCountdown();
+             syncBallData();
+             setInterval(runCountdown, 1000);
+             setInterval(syncBallData, 1000);
+         }
+     </script>
+ </body>
+ </html>

@@ -12,44 +12,42 @@
         }
         body {
             font-family: "Microsoft Yahei", sans-serif;
-            background: #333;
+            background: #222;
             color: #fff;
             padding: 20px 10px;
-            min-height: 100vh;
         }
         .admin-box {
             max-width: 800px;
             margin: 0 auto;
-            background: #444;
-            padding: 20px 15px;
+            background: #333;
+            padding: 25px;
             border-radius: 16px;
         }
         h2 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 25px;
             color: #ffd700;
-            font-size: 1.5rem;
         }
         .ctrl-group {
-            margin: 18px 0;
+            margin: 20px 0;
             padding: 15px;
-            background: #555;
+            background: #444;
             border-radius: 8px;
         }
         h3 {
-            margin-bottom: 10px;
-            font-size: 1.1rem;
+            margin-bottom: 12px;
+            font-size: 16px;
         }
         .row {
             display: flex;
             align-items: center;
-            margin: 10px 0;
-            gap: 8px;
             flex-wrap: wrap;
+            gap: 8px;
+            margin: 10px 0;
         }
         .row label {
             width: 70px;
-            font-size: 15px;
+            font-size: 14px;
         }
         .row input, .row select {
             padding: 6px;
@@ -57,45 +55,29 @@
             font-size: 14px;
             border: none;
             border-radius: 4px;
+            outline: none;
         }
         button {
-            padding: 9px 18px;
+            padding: 8px 20px;
             font-size: 15px;
             border: none;
             border-radius: 6px;
             cursor: pointer;
-            margin: 4px;
+            margin: 5px;
+        }
+        .btn-time {
+            background: #999;
+            color: #000;
         }
         .btn-save {
             background: #e74c3c;
             color: #fff;
         }
-        .btn-time {
-            background: #999;
-            color: #fff;
-        }
-        .btn-clear {
-            background: #3498db;
-            color: #fff;
-        }
-        .record-list {
-            margin-top: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-            padding: 10px;
-            background: #555;
-            border-radius: 8px;
-        }
-        .record-item {
-            line-height: 2;
-            border-bottom: 1px dashed #777;
-            font-size: 0.95rem;
-        }
     </style>
 </head>
 <body>
     <div class="admin-box">
-        <h2>赛事数据后台</h2>
+        <h2>数据后台设置</h2>
 
         <!-- 倒计时设置区域 -->
         <div class="ctrl-group">
@@ -104,16 +86,16 @@
                 <label>小时：</label>
                 <input type="number" id="hour" value="0" min="0" max="23">
                 <label>分钟：</label>
-                <input type="number" id="minute" value="3" min="0" max="59">
+                <input type="number" id="minute" value="1" min="0" max="59">
                 <button class="btn-time" onclick="setTime()">应用倒计时</button>
             </div>
         </div>
 
-        <!-- 7组球独立设置：号码 + 姓名 + 颜色 -->
+        <!-- 7组球数据设置 -->
         <div class="ctrl-group">
-            <h3>每球数据设置（号码1-49，允许重复）</h3>
+            <h3>号码/选手/颜色设置（号码范围 01-49，可重复）</h3>
             <div class="row">
-                <label>第1球：</label>
+                <label>第1球</label>
                 <input type="text" id="n1" placeholder="号码">
                 <input type="text" id="name1" placeholder="选手名">
                 <select id="color1">
@@ -123,7 +105,7 @@
                 </select>
             </div>
             <div class="row">
-                <label>第2球：</label>
+                <label>第2球</label>
                 <input type="text" id="n2" placeholder="号码">
                 <input type="text" id="name2" placeholder="选手名">
                 <select id="color2">
@@ -133,7 +115,7 @@
                 </select>
             </div>
             <div class="row">
-                <label>第3球：</label>
+                <label>第3球</label>
                 <input type="text" id="n3" placeholder="号码">
                 <input type="text" id="name3" placeholder="选手名">
                 <select id="color3">
@@ -143,7 +125,7 @@
                 </select>
             </div>
             <div class="row">
-                <label>第4球：</label>
+                <label>第4球</label>
                 <input type="text" id="n4" placeholder="号码">
                 <input type="text" id="name4" placeholder="选手名">
                 <select id="color4">
@@ -153,7 +135,7 @@
                 </select>
             </div>
             <div class="row">
-                <label>第5球：</label>
+                <label>第5球</label>
                 <input type="text" id="n5" placeholder="号码">
                 <input type="text" id="name5" placeholder="选手名">
                 <select id="color5">
@@ -163,7 +145,7 @@
                 </select>
             </div>
             <div class="row">
-                <label>第6球：</label>
+                <label>第6球</label>
                 <input type="text" id="n6" placeholder="号码">
                 <input type="text" id="name6" placeholder="选手名">
                 <select id="color6">
@@ -173,7 +155,7 @@
                 </select>
             </div>
             <div class="row">
-                <label>特别球：</label>
+                <label>第7球</label>
                 <input type="text" id="n7" placeholder="号码">
                 <input type="text" id="name7" placeholder="选手名">
                 <select id="color7">
@@ -182,151 +164,52 @@
                     <option value="green">绿色</option>
                 </select>
             </div>
-            <br>
+        </div>
+
+        <div style="text-align:center;margin-top:20px;">
             <button class="btn-save" onclick="saveData()">提交全部数据</button>
-        </div>
-
-        <!-- 记录清空 -->
-        <div class="ctrl-group">
-            <h3>记录操作</h3>
-            <button class="btn-clear" onclick="clearAll()">清空所有数据与记录</button>
-        </div>
-
-        <!-- 历史记录展示 -->
-        <div class="record-list" id="recordBox">
-            <div>暂无记录</div>
         </div>
     </div>
 
     <script>
-        let recordArr = [];
-        window.onload = function(){
-            let oldRec = localStorage.getItem("gameRecord");
-            if(oldRec){
-                recordArr = JSON.parse(oldRec);
-                renderRecord();
-            }
-        }
-
-        // 设置倒计时总秒数
-        function setTime(){
-            let h = parseInt(document.getElementById("hour").value) || 0;
-            let m = parseInt(document.getElementById("minute").value) || 0;
-            if(m < 0 || m > 59){
-                alert("分钟请填写 0 - 59");
-                return;
-            }
+        // 设置倒计时
+        function setTime() {
+            let h = parseInt(document.getElementById('hour').value) || 0;
+            let m = parseInt(document.getElementById('minute').value) || 0;
             let total = h * 3600 + m * 60;
             localStorage.setItem("countTotal", total);
-            alert("倒计时已同步前台！");
+            alert("倒计时已应用！");
         }
 
-        // 号码校验：1~49，允许重复
-        function checkNum(val){
-            let num = parseInt(val);
-            return !isNaN(num) && num >= 1 && num <= 49;
-        }
+        // 数据校验 + 提交保存
+        function saveData() {
+            let list = [];
+            // 遍历7组数据
+            for(let i = 1; i <= 7; i++){
+                let num = document.getElementById('n' + i).value.trim();
+                let name = document.getElementById('name' + i).value.trim();
+                let color = document.getElementById('color' + i).value;
 
-        // 提交保存所有球数据
-        function saveData(){
-            let numList = [
-                document.getElementById("n1").value,
-                document.getElementById("n2").value,
-                document.getElementById("n3").value,
-                document.getElementById("n4").value,
-                document.getElementById("n5").value,
-                document.getElementById("n6").value,
-                document.getElementById("n7").value
-            ];
-            let nameList = [
-                document.getElementById("name1").value || "未知选手",
-                document.getElementById("name2").value || "未知选手",
-                document.getElementById("name3").value || "未知选手",
-                document.getElementById("name4").value || "未知选手",
-                document.getElementById("name5").value || "未知选手",
-                document.getElementById("name6").value || "未知选手",
-                document.getElementById("name7").value || "未知选手"
-            ];
-            let colorList = [
-                document.getElementById("color1").value,
-                document.getElementById("color2").value,
-                document.getElementById("color3").value,
-                document.getElementById("color4").value,
-                document.getElementById("color5").value,
-                document.getElementById("color6").value,
-                document.getElementById("color7").value
-            ];
-
-            // 逐行校验号码
-            for(let i = 0; i < 7; i++){
-                if(!checkNum(numList[i])){
-                    alert(`第${i+1}球号码错误，请填写 1 ~ 49`);
+                // 号码校验：必须是 01-49 数字
+                let reg = /^(0[1-9]|[1-4][0-9])$/;
+                if(!reg.test(num)){
+                    alert(`第${i}球号码格式错误！请填写 01 ~ 49 之间数字`);
                     return;
                 }
-            }
-
-            // 组装数据
-            let ballData = [];
-            for(let i = 0; i < 7; i++){
-                ballData.push({
-                    num: String(parseInt(numList[i])).padStart(2,'0'),
-                    name: nameList[i],
-                    color: colorList[i]
+                if(name === ""){
+                    alert(`第${i}球选手名不能为空`);
+                    return;
+                }
+                list.push({
+                    num: num,
+                    name: name,
+                    color: color
                 });
             }
-            localStorage.setItem("ballAllData", JSON.stringify(ballData));
-
-            // 单独取第7个特别球 用于顶部方块展示 + 记录
-            let specialBall = ballData[6];
-            let now = new Date();
-            let timeStr = `${now.getHours().toString().padStart(2,0)}:${now.getMinutes().toString().padStart(2,0)}:${now.getSeconds().padStart(2,0)}`;
-
-            let currentRes = {
-                num: specialBall.num,
-                name: specialBall.name,
-                color: specialBall.color
-            };
-            localStorage.setItem("currentResult", JSON.stringify(currentRes));
-
-            // 写入历史记录
-            recordArr.push({
-                num: specialBall.num,
-                name: specialBall.name,
-                color: specialBall.color,
-                time: timeStr
-            });
-            localStorage.setItem("gameRecord", JSON.stringify(recordArr));
-            renderRecord();
-
+            // 存入本地存储
+            localStorage.setItem("ballAllData", JSON.stringify(list));
             alert("数据提交成功，前台已同步！");
-        }
-
-        // 渲染历史记录
-        function renderRecord(){
-            let box = document.getElementById("recordBox");
-            if(recordArr.length === 0){
-                box.innerHTML = "<div>暂无记录</div>";
-                return;
-            }
-            let html = "";
-            recordArr.forEach((item, idx)=>{
-                html += `<div class="record-item">
-                    第${idx+1}轮 | 特别球：${item.num} | 选手：${item.name} | 颜色：${item.color} | 时间：${item.time}
-                </div>`;
-            });
-            box.innerHTML = html;
-        }
-
-        // 清空全部数据
-        function clearAll(){
-            recordArr = [];
-            localStorage.removeItem("gameRecord");
-            localStorage.removeItem("currentResult");
-            localStorage.removeItem("ballAllData");
-            localStorage.removeItem("countTotal");
-            renderRecord();
-            alert("所有数据、记录、倒计时已清空！");
-        }
-    </script>
-</body>
-</html>
+         }
+     </script>
+ </body>
+ </html>
