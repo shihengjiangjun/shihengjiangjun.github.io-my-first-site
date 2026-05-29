@@ -2,8 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>新A开奖记录</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>更新网</title>
     <style>
         * {
             margin: 0;
@@ -12,288 +12,288 @@
         }
         body {
             font-family: "Microsoft Yahei", sans-serif;
-            background: #333;
-            color: #fff;
-            padding: 20px 10px;
             min-height: 100vh;
-        }
-        .admin-box {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #444;
-            padding: 20px 15px;
-            border-radius: 16px;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 20px;
-            color: #ffd700;
-            font-size: 1.5rem;
-        }
-        .ctrl-group {
-            margin: 18px 0;
-            padding: 15px;
-            background: #555;
-            border-radius: 8px;
-        }
-        h3 {
-            margin-bottom: 10px;
-            font-size: 1.1rem;
-        }
-        .row {
             display: flex;
             align-items: center;
-            margin: 10px 0;
-            gap: 8px;
+            justify-content: center;
+            background: url("失恒将军.jpg") no-repeat center center / cover;
+            background-color: #222;
+            color: #000;
+            padding: 20px 10px;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            padding: 45px 35px;
+            border-radius: 24px;
+            max-width: 80%;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            text-shadow: 0 0 12px rgba(255, 255,255, 0.8);
+            font-weight: bold;
+            line-height: 1.3;
+        }
+        p {
+            font-size: 1.5rem;
+            line-height: 1.8;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+            white-space: pre-line;
+        }
+        .update-time {
+            margin-top: 35px;
+            font-size: 1.1rem;
+            opacity: 0.9;
+            text-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
+        }
+        audio {
+            display: none;
+        }
+
+        /* 新增功能区域样式，不影响原有样式 */
+        .countdown-box {
+            margin: 30px auto 20px;
+            background: rgba(0,0,0,0.7);
+            color: #fff;
+            padding: 15px;
+            border-radius: 12px;
+            max-width: 500px;
+        }
+        .countdown-title {
+            font-size: 1.1rem;
+            margin-bottom: 10px;
+        }
+        .countdown-time {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffd700;
+        }
+        .result-panel {
+            width: 140px;
+            height: 140px;
+            background: #fff;
+            border-radius: 12px;
+            margin: 15px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #333;
+        }
+        .current-ball {
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 24px;
+            line-height: 65px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        .current-ball.red { background: #e74c3c; }
+        .current-ball.blue { background: #3498db; }
+        .current-ball.green { background: #27ae60; }
+        .current-player {
+            font-size: 1rem;
+            color: #333;
+        }
+        .ball-wrap {
+            display: flex;
             flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin: 25px 0;
         }
-        .row label {
-            width: 70px;
-            font-size: 15px;
+        .ball-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 65px;
         }
-        .row input, .row select {
-            padding: 6px;
-            width: 100px;
-            font-size: 14px;
-            border: none;
-            border-radius: 4px;
+        .ball {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            color: #fff;
+            font-size: 16px;
+            line-height: 45px;
+            font-weight: bold;
+            border: 2px solid #fff;
+            margin-bottom: 6px;
         }
-        button {
-            padding: 9px 18px;
-            font-size: 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 4px;
+        .ball.special {
+            border: 2px solid gold;
         }
-        .btn-save { background: #e74c3c; color: #fff; }
-        .btn-time { background: #999; color: #fff; }
-        .btn-clear { background: #3498db; color: #fff; }
+        .ball-desc {
+            width: 60px;
+            font-size: 12px;
+            text-align: center;
+            word-break: break-all;
+        }
         .record-list {
-            margin-top: 20px;
-            max-height: 300px;
+            margin: 20px auto 0;
+            text-align: left;
+            max-width: 900px;
+            max-height: 220px;
             overflow-y: auto;
-            padding: 10px;
-            background: #555;
-            border-radius: 8px;
+            padding: 15px;
+            background: rgba(255,255,255,0.6);
+            border-radius: 12px;
         }
         .record-item {
-            line-height: 2;
-            border-bottom: 1px dashed #777;
             font-size: 0.95rem;
+            line-height: 1.8;
+            border-bottom: 1px dashed #999;
         }
     </style>
 </head>
 <body>
-    <div class="admin-box">
-        <h2>比赛后台（6普通球 + 1特别球）</h2>
+    <div class="container">
+        <!-- 原有区域：读取data.json文字 + 原有时间 -->
+        <h1 id="title"></h1>
+        <p id="content"></p>
+        <div class="update-time" id="updateTime"></div>
 
-        <div class="ctrl-group">
-            <h3>全局倒计时设置</h3>
-            <div class="row">
-                <label>小时：</label>
-                <input type="number" id="hour" value="0" min="0" max="23">
-                <label>分钟：</label>
-                <input type="number" id="minute" value="3" min="0" max="59">
-                <button class="btn-time" onclick="setTime()">应用</button>
+        <!-- 新增区域：倒计时 + 特别球方块 -->
+        <div class="countdown-box">
+            <div class="countdown-title">下一场开球倒计时</div>
+            <div class="countdown-time" id="countdown">00:00:00</div>
+            <div class="result-panel">
+                <div class="current-ball" id="currentBall">--</div>
+                <div class="current-player" id="currentPlayer">特别球</div>
             </div>
         </div>
 
-        <div class="ctrl-group">
-            <h3>每球独立设置（号码01-49 / 姓名 / 圆圈颜色）</h3>
-            <div class="row">
-                <label>第1球：</label>
-                <input type="text" id="n1" placeholder="号码">
-                <input type="text" id="name1" placeholder="选手名">
-                <select id="color1">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第2球：</label>
-                <input type="text" id="n2" placeholder="号码">
-                <input type="text" id="name2" placeholder="选手名">
-                <select id="color2">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第3球：</label>
-                <input type="text" id="n3" placeholder="号码">
-                <input type="text" id="name3" placeholder="选手名">
-                <select id="color3">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第4球：</label>
-                <input type="text" id="n4" placeholder="号码">
-                <input type="text" id="name4" placeholder="选手名">
-                <select id="color4">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第5球：</label>
-                <input type="text" id="n5" placeholder="号码">
-                <input type="text" id="name5" placeholder="选手名">
-                <select id="color5">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第6球：</label>
-                <input type="text" id="n6" placeholder="号码">
-                <input type="text" id="name6" placeholder="选手名">
-                <select id="color6">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>特别球：</label>
-                <input type="text" id="n7" placeholder="号码">
-                <input type="text" id="name7" placeholder="选手名">
-                <select id="color7">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <br>
-            <button class="btn-save" onclick="saveData()">提交全部数据同步前台</button>
-        </div>
+        <!-- 新增区域：7个彩色圆圈（号码+名字） -->
+        <div class="ball-wrap" id="ballWrap"></div>
 
-        <div class="ctrl-group">
-            <h3>记录操作</h3>
-            <button class="btn-clear" onclick="clearAll()">清空所有记录</button>
-        </div>
-
-        <div class="record-list" id="recordBox">
-            <div>暂无记录</div>
+        <!-- 新增区域：历史记录 -->
+        <div class="record-list" id="recordList">
+            <div class="record-item">暂无开球记录</div>
         </div>
     </div>
 
+    <audio id="bgm" loop>
+        <source src="失恒将军.mp3" type="audio/mpeg">
+    
+
     <script>
-        let recordArr = [];
-        window.onload = function(){
-            let oldRec = localStorage.getItem("gameRecord");
-            if(oldRec){
-                recordArr = JSON.parse(oldRec);
-                renderRecord();
-            }
-        }
-
-        // 设置倒计时
-        function setTime(){
-            let h = parseInt(document.getElementById("hour").value) || 0;
-            let m = parseInt(document.getElementById("minute").value) || 0;
-            if(m < 0 || m > 59){
-                alert("分钟请输入 0-59");
-                return;
-            }
-            let total = h * 3600 + m * 60;
-            localStorage.setItem("countTotal", total);
-            alert("倒计时已同步前台，实时走动生效");
-        }
-
-        // 号码校验：1-49，允许重复
-        function checkNum(val){
-            let num = parseInt(val);
-            return !isNaN(num) && num >= 1 && num <= 49;
-        }
-
-        function saveData(){
-            let numList = [
-                document.getElementById("n1").value,
-                document.getElementById("n2").value,
-                document.getElementById("n3").value,
-                document.getElementById("n4").value,
-                document.getElementById("n5").value,
-                document.getElementById("n6").value,
-                document.getElementById("n7").value
-            ];
-            let nameList = [
-                document.getElementById("name1").value || "未知选手",
-                document.getElementById("name2").value || "未知选手",
-                document.getElementById("name3").value || "未知选手",
-                document.getElementById("name4").value || "未知选手",
-                document.getElementById("name5").value || "未知选手",
-                document.getElementById("name6").value || "未知选手",
-                document.getElementById("name7").value || "未知选手"
-            ];
-            let colorList = [
-                document.getElementById("color1").value,
-                document.getElementById("color2").value,
-                document.getElementById("color3").value,
-                document.getElementById("color4").value,
-                document.getElementById("color5").value,
-                document.getElementById("color6").value,
-                document.getElementById("color7").value
-            ];
-
-            // 逐行校验号码
-            for(let i = 0; i < 7; i++){
-                if(!checkNum(numList[i])){
-                    alert(`第${i+1}球号码错误，请填写 1~49`);
-                    return;
-                }
-            }
-
-            // 组装数据
-            let ballData = [];
-            for(let i = 0; i < 7; i++){
-                ballData.push({
-                    num: String(parseInt(numList[i])).padStart(2,'0'),
-                    name: nameList[i],
-                    color: colorList[i]
-                });
-            }
-            localStorage.setItem("ballAllData", JSON.stringify(ballData));
-
-            // 正方形区域固定取 第7个特别球
-            let specialBall = ballData[6];
-            let now = new Date();
-            let timeStr = `${now.getHours().toString().padStart(2,0)}:${now.getMinutes().toString().padStart(2,0)}:${now.getSeconds().padStart(2,0)}`;
-
-            let currentRes = {
-                num: specialBall.num,
-                name: specialBall.name,
-                color: specialBall.color
-            };
-            localStorage.setItem("currentResult", JSON.stringify(currentRes));
-
-            // 保存历史记录
-            recordArr.push({
-                num: specialBall.num,
-                name: specialBall.name,
-                color: specialBall.color,
-                time: timeStr
+        // ========== 原有代码 完全保留 未做任何修改 ==========
+        // 读取 data.json 数据
+        fetch('data.json')
+            .then(res => res.json())
+            .then(data => {
+                document.getElementById('title').innerText = data.title;
+                document.getElementById('content').innerText = data.content;
+            })
+            .catch(() => {
+                document.getElementById('content').innerText = "加载失败，请检查文件";
             });
-            localStorage.setItem("gameRecord", JSON.stringify(recordArr));
-            renderRecord();
-            alert("数据提交成功！每球号码、名称、颜色已同步");
+
+        // 实时时间（时:分:秒）
+        function showTime() {
+            const now = new Date();
+            let h = String(now.getHours()).padStart(2, '0');
+            let m = String(now.getMinutes()).padStart(2, '0');
+            let s = String(now.getSeconds()).padStart(2, '0');
+            document.getElementById('updateTime').innerText = `当前时间：${h}:${m}:${s}`;
+        }
+        showTime();
+        setInterval(showTime, 1000);
+
+        // 点击/滑动播放音乐，仅触发一次
+        const audio = document.getElementById('bgm');
+        let isPlay = false;
+        function playAudio() {
+            if (isPlay) return;
+            isPlay = true;
+            audio.play();
+        }
+        document.addEventListener('click', playAudio);
+        document.addEventListener('touchmove', playAudio);
+
+        // ========== 新增功能代码（球、倒计时、数据同步） ==========
+        // 初始化7个球容器
+        function initBallDom(){
+            const wrap = document.getElementById("ballWrap");
+            wrap.innerHTML = "";
+            for(let i = 0; i < 7; i++){
+                let item = document.createElement("div");
+                item.className = "ball-item";
+                let circle = document.createElement("div");
+                circle.className = "ball";
+                if(i === 6) circle.classList.add("special");
+                let desc = document.createElement("div");
+                desc.className = "ball-desc";
+                item.appendChild(circle);
+                item.appendChild(desc);
+                wrap.appendChild(item);
+            }
         }
 
-        function renderRecord(){
-            let box = document.getElementById("recordBox");
-            if(recordArr.length === 0){
-                box.innerHTML = "<div>暂无记录</div>";
+        // 实时倒计时 每秒递减
+        function runCountdown(){
+            let total = parseInt(localStorage.getItem("countTotal")) || 0;
+            if(total <= 0){
+                document.getElementById("countdown").innerText = "00:00:00";
                 return;
             }
+            let h = Math.floor(total / 3600);
+            let m = Math.floor((total % 3600) / 60);
+            let s = total % 60;
+            document.getElementById("countdown").innerText = 
+                `${String(h).padStart(2,"0")}:${String(m).padStart(2,"0")}:${String(s).padStart(2,"0")}`;
+            total--;
+            localStorage.setItem("countTotal", total);
+        }
+
+        // 同步7个球：号码、名称、圆圈颜色
+        function syncBallData(){
+            let data = localStorage.getItem("ballAllData");
+            if(!data) return;
+            let list = JSON.parse(data);
+            let items = document.querySelectorAll(".ball-item");
+            items.forEach((el, idx)=>{
+                let circle = el.querySelector(".ball");
+                let desc = el.querySelector(".ball-desc");
+                circle.innerText = list[idx].num;
+                if(list[idx].color === "red") circle.style.background = "#e74c3c";
+                else if(list[idx].color === "blue") circle.style.background = "#3498db";
+                else circle.style.background = "#27ae60";
+                desc.innerText = list[idx].name;
+            });
+        }
+
+        // 同步倒计时下方正方形（仅展示第7个特别球）
+        function syncCurrentResult(){
+            let res = localStorage.getItem("currentResult");
+            if(!res) return;
+            let obj = JSON.parse(res);
+            let ballDom = document.getElementById("currentBall");
+            let nameDom = document.getElementById("currentPlayer");
+            ballDom.innerText = obj.num;
+            ballDom.className = `current-ball ${obj.color}`;
+            nameDom.innerText = obj.name;
+        }
+
+        // 同步历史记录
+        function syncRecord(){
+            let rec = localStorage.getItem("gameRecord");
+            let box = document.getElementById("recordList");
+            if(!rec){
+                box.innerHTML = '<div class="record-item">暂无开球记录</div>';
+                return;
+            }
+            let arr = JSON.parse(rec);
             let html = "";
-            recordArr.forEach((item, idx)=>{
+            arr.forEach((item, idx)=>{
                 html += `<div class="record-item">
                     第${idx+1}轮 | 特别球：${item.num} | 选手：${item.name} | 颜色：${item.color} | 时间：${item.time}
                 </div>`;
@@ -301,14 +301,18 @@
             box.innerHTML = html;
         }
 
-        function clearAll(){
-            recordArr = [];
-            localStorage.removeItem("gameRecord");
-            localStorage.removeItem("currentResult");
-            localStorage.removeItem("ballAllData");
-            localStorage.removeItem("countTotal");
-            renderRecord();
-            alert("所有数据、记录已清空");
+        // 页面加载完成初始化 + 定时刷新数据
+        window.onload = function(){
+            initBallDom();
+            runCountdown();
+            syncBallData();
+            syncCurrentResult();
+            syncRecord();
+
+            setInterval(runCountdown, 1000);
+            setInterval(syncBallData, 1000);
+            setInterval(syncCurrentResult, 1000);
+            setInterval(syncRecord, 1000);
         }
     </script>
 </body>
