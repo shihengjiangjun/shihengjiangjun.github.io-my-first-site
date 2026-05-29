@@ -2,7 +2,8 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- 强制移动端适配、禁止缩放，保证布局稳定 -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>更新网</title>
     <style>
         * {
@@ -25,22 +26,22 @@
             background: rgba(255, 255, 255, 0.8);
             backdrop-filter: blur(6px);
             -webkit-backdrop-filter: blur(6px);
-            padding: 45px 35px;
+            padding: 20px 15px;
             border-radius: 24px;
-            max-width: 80%;
             width: 100%;
+            max-width: 100%;
             text-align: center;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
         h1 {
-            font-size: 3rem;
-            margin-bottom: 25px;
+            font-size: 2rem;
+            margin-bottom: 20px;
             text-shadow: 0 0 12px rgba(255, 255,255, 0.8);
             font-weight: bold;
             line-height: 1.3;
         }
         p {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             line-height: 1.8;
             margin-bottom: 15px;
             text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
@@ -48,8 +49,8 @@
             white-space: pre-line;
         }
         .update-time {
-            margin-top: 35px;
-            font-size: 1.1rem;
+            margin-top: 20px;
+            font-size: 1rem;
             opacity: 0.9;
             text-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
         }
@@ -57,55 +58,62 @@
             display: none;
         }
 
-        /* 倒计时样式 */
         .countdown-box {
-            margin: 30px auto 20px;
+            margin: 25px auto 20px;
             background: rgba(0,0,0,0.7);
             color: #fff;
-            padding: 15px;
+            padding: 12px;
             border-radius: 12px;
             max-width: 500px;
         }
         .countdown-title {
-            font-size: 1.1rem;
-            margin-bottom: 10px;
+            font-size: 1rem;
+            margin-bottom: 8px;
         }
         .countdown-time {
-            font-size: 1.8rem;
+            font-size: 1.6rem;
             font-weight: bold;
             color: #ffd700;
         }
 
-        /* 7个圆球布局 */
+        /* 核心：强制单行横向排列，禁止换行 */
         .ball-wrap {
             display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
+            flex-direction: row;
+            flex-wrap: nowrap; /* 禁止换行 */
             justify-content: center;
-            margin: 25px 0;
+            align-items: center;
+            gap: 6px; /* 圆圈间距缩小，适配手机 */
+            margin: 20px 0;
+            overflow-x: auto; /* 屏幕太窄时可左右滑动，不会挤压变形 */
+            padding: 5px;
         }
         .ball-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 65px;
+            flex-shrink: 0; /* 关键：禁止圆圈被压缩变形 */
+            width: 52px;
         }
         .ball {
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%; /* 强制正圆 */
             color: #fff;
-            font-size: 16px;
-            line-height: 45px;
+            font-size: 14px;
+            line-height: 40px;
             font-weight: bold;
             border: 2px solid #fff;
-            margin-bottom: 6px;
+            /* 固定宽高，杜绝变形 */
+            min-width: 40px;
+            min-height: 40px;
         }
         .ball-desc {
-            width: 60px;
-            font-size: 12px;
+            width: 50px;
+            font-size: 11px;
             text-align: center;
             word-break: break-all;
+            margin-top: 4px;
         }
     </style>
 </head>
@@ -120,7 +128,7 @@
             <div class="countdown-time" id="countdown">00:00:00</div>
         </div>
 
-        <!-- 7个球容器 -->
+        <!-- 7球单行布局 -->
         <div class="ball-wrap" id="ballWrap"></div>
     </div>
 
@@ -129,7 +137,7 @@
     
 
     <script>
-        // 加载data.json文字内容
+        // 加载文字
         fetch('data.json')
             .then(res => res.json())
             .then(data => {
@@ -140,7 +148,7 @@
                 document.getElementById('content').innerText = "加载失败，请检查文件";
             });
 
-        // 系统当前时间
+        // 本地时间
         function showTime() {
             const now = new Date();
             let h = String(now.getHours()).padStart(2, '0');
@@ -151,7 +159,7 @@
         showTime();
         setInterval(showTime, 1000);
 
-        // 背景音乐播放
+        // 背景音乐
         const audio = document.getElementById('bgm');
         let isPlay = false;
         function playAudio() {
@@ -162,7 +170,7 @@
         document.addEventListener('click', playAudio);
         document.addEventListener('touchmove', playAudio);
 
-        // 初始化7个圆圈
+        // 初始化7个球
         function initBallDom() {
             const wrap = document.getElementById("ballWrap");
             wrap.innerHTML = "";
@@ -179,23 +187,25 @@
             }
         }
 
-        // 倒计时运行
+        // 离线持续倒计时（时间戳方案）
         function runCountdown() {
-            let total = parseInt(localStorage.getItem("countTotal")) || 0;
-            if (total <= 0) {
+            let endTime = parseInt(localStorage.getItem("countEndTime")) || 0;
+            let now = Date.now();
+            let diff = Math.floor((endTime - now) / 1000);
+
+            if (diff <= 0) {
                 document.getElementById("countdown").innerText = "00:00:00";
                 return;
             }
-            let h = Math.floor(total / 3600);
-            let m = Math.floor((total % 3600) / 60);
-            let s = total % 60;
+
+            let h = Math.floor(diff / 3600);
+            let m = Math.floor((diff % 3600) / 60);
+            let s = diff % 60;
             document.getElementById("countdown").innerText =
                 `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-            total--;
-            localStorage.setItem("countTotal", total);
         }
 
-        // 同步后台数据：号码+号、颜色、选手名
+        // 同步球数据（无加号）
         function syncBallData() {
             let data = localStorage.getItem("ballAllData");
             if (!data) return;
@@ -205,9 +215,7 @@
                 if (!list[i]) continue;
                 let circle = items[i].querySelector(".ball");
                 let desc = items[i].querySelector(".ball-desc");
-                // 数字后面加 +
-                circle.innerText = list[i].num + "+";
-                // 对应颜色
+                circle.innerText = list[i].num;
                 if (list[i].color === "red") {
                     circle.style.background = "#e74c3c";
                 } else if (list[i].color === "blue") {
@@ -215,19 +223,18 @@
                 } else {
                     circle.style.background = "#27ae60";
                 }
-                // 显示选手名字
                 desc.innerText = list[i].name;
             }
         }
 
         // 页面加载执行
         window.onload = function () {
-             initBallDom();
-             runCountdown();
-             syncBallData();
-             setInterval(runCountdown, 1000);
-             setInterval(syncBallData, 1000);
-         }
-     </script>
- </body>
- </html>
+            initBallDom();
+            runCountdown();
+            syncBallData();
+            setInterval(runCountdown, 1000);
+            setInterval(syncBallData, 1000);
+        }
+    </script>
+</body>
+</html>

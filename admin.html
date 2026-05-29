@@ -79,7 +79,6 @@
     <div class="admin-box">
         <h2>数据后台设置</h2>
 
-        <!-- 倒计时设置区域 -->
         <div class="ctrl-group">
             <h3>全局倒计时设置</h3>
             <div class="row">
@@ -91,9 +90,8 @@
             </div>
         </div>
 
-        <!-- 7组球数据设置 -->
         <div class="ctrl-group">
-            <h3>号码/选手/颜色设置（号码范围 01-49，可重复）</h3>
+            <h3>号码/选手/颜色设置（号码 01-49，可重复）</h3>
             <div class="row">
                 <label>第1球</label>
                 <input type="text" id="n1" placeholder="号码">
@@ -172,44 +170,39 @@
     </div>
 
     <script>
-        // 设置倒计时
+        // 设置倒计时：保存【结束时间戳】，离线也会继续倒计时
         function setTime() {
             let h = parseInt(document.getElementById('hour').value) || 0;
             let m = parseInt(document.getElementById('minute').value) || 0;
-            let total = h * 3600 + m * 60;
-            localStorage.setItem("countTotal", total);
-            alert("倒计时已应用！");
+            let totalSec = h * 3600 + m * 60;
+            // 当前时间 + 总秒数 = 结束时间戳
+            let endTime = Date.now() + totalSec * 1000;
+            localStorage.setItem("countEndTime", endTime);
+            alert("倒计时已应用，离线也会持续走时！");
         }
 
-        // 数据校验 + 提交保存
+        // 数据提交校验
         function saveData() {
             let list = [];
-            // 遍历7组数据
+            let reg = /^(0[1-9]|[1-4][0-9])$/;
             for(let i = 1; i <= 7; i++){
                 let num = document.getElementById('n' + i).value.trim();
                 let name = document.getElementById('name' + i).value.trim();
                 let color = document.getElementById('color' + i).value;
 
-                // 号码校验：必须是 01-49 数字
-                let reg = /^(0[1-9]|[1-4][0-9])$/;
                 if(!reg.test(num)){
-                    alert(`第${i}球号码格式错误！请填写 01 ~ 49 之间数字`);
+                    alert(`第${i}球号码错误，请填 01~49`);
                     return;
                 }
                 if(name === ""){
                     alert(`第${i}球选手名不能为空`);
                     return;
                 }
-                list.push({
-                    num: num,
-                    name: name,
-                    color: color
-                });
+                list.push({num, name, color});
             }
-            // 存入本地存储
             localStorage.setItem("ballAllData", JSON.stringify(list));
             alert("数据提交成功，前台已同步！");
-         }
-     </script>
- </body>
- </html>
+        }
+    </script>
+</body>
+</html>
