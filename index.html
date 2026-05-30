@@ -1,96 +1,21 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>更新网</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: "Microsoft Yahei", sans-serif;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: url("失恒将军.jpg") no-repeat center center / cover;
-            background-color: #222;
-            color: #000;
-            padding: 20px 10px;
-        }
-        .container {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            padding: 20px 15px;
-            border-radius: 24px;
-            width: 100%;
-            max-width: 100%;
-            text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        h1 {
-            font-size: 2rem;
-            margin-bottom: 20px;
-            text-shadow: 0 0 12px rgba(255,255,255,0.8);
-            font-weight: bold;
-        }
-        p {
-            font-size: 1.2rem;
-            line-height: 1.8;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(255,255,255,0.8);
-            white-space: pre-line;
-        }
-        .update-time {
-            margin-top: 20px;
-            font-size: 1rem;
-            opacity: 0.9;
-        }
-        audio {
-            display: none;
-        }
-        .ball-wrap {
-            display: flex;
-            flex-direction: row;
-            flex-wrap: nowrap;
-            justify-content: center;
-            align-items: flex-start;
-            gap: 8px;
-            margin: 25px 0;
-            overflow-x: auto;
-            padding: 5px;
-        }
-        .ball-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            flex-shrink: 0;
-            width: 54px;
-        }
-        .ball {
-            width: 44px;
-            height: 44px;
-            border-radius: 50%;
-            color: #fff;
-            font-size: 16px;
-            line-height: 44px;
-            font-weight: bold;
-            border: 2px solid #fff;
-            text-align: center;
-        }
-        .ball-desc {
-            width: 54px;
-            font-size: 12px;
-            text-align: center;
-            margin-top: 6px;
-            line-height: 1.3;
-            font-weight: 500;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>更新网</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:Microsoft Yahei,sans-serif;min-height:100vh;display:flex;align-items:center;justify-content:center;background:url("失恒将军.jpg") no-repeat center center / cover;background-color:#222;color:#000;padding:20px 10px}
+.container{background:rgba(255,255,255,0.8);backdrop-filter:blur(6px);padding:20px 15px;border-radius:24px;width:100%;max-width:600px;text-align:center}
+h1{font-size:2rem;margin-bottom:20px;text-shadow:0 0 12px #fff}
+p{font-size:1.2rem;line-height:1.8;margin-bottom:15px}
+.update-time{margin-top:20px;font-size:1rem}
+.ball-wrap{display:flex;flex-wrap:nowrap;gap:8px;justify-content:center;margin:30px 0;overflow-x:auto;padding:5px}
+.ball-item{display:flex;flex-direction:column;align-items:center;flex-shrink:0;width:54px}
+.ball{width:44px;height:44px;border-radius:50%;color:#fff;font-size:16px;line-height:44px;font-weight:bold;border:2px solid #fff}
+.ball-name{margin-top:6px;font-size:12px;width:54px;text-align:center;line-height:1.3}
+</style>
 </head>
 <body>
 <div class="container">
@@ -101,99 +26,80 @@
 </div>
 
 <audio id="bgm" loop>
-<source src="失恒将军.mp3" type="audio/mpeg">
+<source src="失恒将军.mp3">
 
 <script>
-// ==============================================
-// 【保留你原来的】从 data.json 读取标题、内容
-// ==============================================
+// 读取data.json文字（你原来的功能完全保留）
 fetch('data.json')
-.then(res => res.json())
-.then(data => {
-    document.getElementById('title').innerText = data.title;
-    document.getElementById('content').innerText = data.content;
+.then(res=>res.json())
+.then(data=>{
+    document.getElementById('title').innerText=data.title
+    document.getElementById('content').innerText=data.content
 })
-.catch(() => {
-    document.getElementById('content').innerText = "加载失败，请检查文件";
-});
+.catch(()=>{
+    document.getElementById('content').innerText="加载失败，请检查data.json"
+})
 
-// ==============================================
-// 【保留你原来的】当前时间显示
-// ==============================================
-function showTime() {
-    const now = new Date();
-    let h = String(now.getHours()).padStart(2, '0');
-    let m = String(now.getMinutes()).padStart(2, '0');
-    let s = String(now.getSeconds()).padStart(2, '0');
-    document.getElementById('updateTime').innerText = `当前时间：${h}:${m}:${s}`;
+// 时间显示
+function showTime(){
+    const now=new Date()
+    const h=String(now.getHours()).padStart(2,'0')
+    const m=String(now.getMinutes()).padStart(2,'0')
+    const s=String(now.getSeconds()).padStart(2,'0')
+    document.getElementById('updateTime').innerText=`当前时间：${h}:${m}:${s}`
 }
-showTime();
-setInterval(showTime, 1000);
+showTime()
+setInterval(showTime,1000)
 
-// ==============================================
-// 【保留你原来的】背景音乐
-// ==============================================
-const audio = document.getElementById('bgm');
-let isPlay = false;
-function playAudio() {
-    if (isPlay) return;
-    isPlay = true;
-    audio.play();
+// 背景音乐
+const audio=document.getElementById('bgm')
+let isPlay=false
+function play(){
+    if(isPlay)return
+    isPlay=true
+    audio.play()
 }
-document.addEventListener('click', playAudio);
-document.addEventListener('touchmove', playAudio);
+document.addEventListener('click',play)
+document.addEventListener('touchmove',play)
 
-// ==============================================
-// 固定显示 7 个球（永远不会少！）
-// ==============================================
-function initBallDom() {
-    const wrap = document.getElementById("ballWrap");
-    wrap.innerHTML = "";
-    for (let i = 0; i < 7; i++) {
-        let item = document.createElement("div");
-        item.className = "ball-item";
-        let circle = document.createElement("div");
-        circle.className = "ball";
-        let desc = document.createElement("div");
-        desc.className = "ball-desc";
-        item.appendChild(circle);
-        item.appendChild(desc);
-        wrap.appendChild(item);
+// 永久7个球
+function initBall(){
+    const wrap=document.getElementById('ballWrap')
+    wrap.innerHTML=''
+    for(let i=0;i<7;i++){
+        const item=document.createElement('div')
+        item.className='ball-item'
+        const ball=document.createElement('div')
+        ball.className='ball'
+        const name=document.createElement('div')
+        name.className='ball-name'
+        item.appendChild(ball)
+        item.appendChild(name)
+        wrap.appendChild(item)
     }
 }
 
-// ==============================================
-// 【保留你原来的】后台控制同步（兼容不改）
-// ==============================================
-function syncBallData() {
-    let data = localStorage.getItem("ballAllData");
-    if (!data) return;
-    let list = JSON.parse(data);
-    let items = document.querySelectorAll(".ball-item");
-    for (let i = 0; i < 7; i++) {
-        if (!list[i]) continue;
-        let circle = items[i].querySelector(".ball");
-        let desc = items[i].querySelector(".ball-desc");
-        circle.innerText = list[i].num;
-        if (list[i].color === "red") {
-            circle.style.background = "#e74c3c";
-        } else if (list[i].color === "blue") {
-            circle.style.background = "#3498db";
-        } else {
-            circle.style.background = "#27ae60";
-        }
-        desc.innerText = list[i].name;
-    }
+// 全局同步核心
+async function syncData(){
+    try{
+        const res=await fetch('ball_data.json?v='+Date.now())
+        const list=await res.json()
+        const items=document.querySelectorAll('.ball-item')
+        items.forEach((el,i)=>{
+            if(!list[i])return
+            el.querySelector('.ball').innerText=list[i].num
+            el.querySelector('.ball-name').innerText=list[i].name
+            const c=list[i].color
+            el.querySelector('.ball').style.background=c=='red'?'#e74c3c':c=='blue'?'#3498db':'#27ae60'
+        })
+    }catch(e){}
 }
 
-// ==============================================
-// 启动（全部保留）
-// ==============================================
-window.onload = function () {
-    initBallDom();
-    syncBallData();
-    setInterval(syncBallData, 1000);
-};
+window.onload=function(){
+    initBall()
+    syncData()
+    setInterval(syncData,2000)
+}
 </script>
 </body>
 </html>

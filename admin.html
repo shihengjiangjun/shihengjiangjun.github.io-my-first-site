@@ -2,22 +2,20 @@
 <html lang="zh-CN">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>后台控制</title>
 <style>
 body{font-family:Microsoft Yahei;padding:20px;background:#f5f5f5}
-.item{margin-bottom:15px}
-input{width:60px;padding:8px;margin-right:5px}
-select{padding:8px}
+.item{margin-bottom:12px}
+input{width:60px;padding:6px}
+select{padding:6px}
 button{padding:10px 20px;background:#09f;color:#fff;border:none;border-radius:6px;margin-top:10px}
-.ball{display:inline-block;width:40px;height:40px;border-radius:50%;color:#fff;line-height:40px;text-align:center;margin-right:5px}
 </style>
 </head>
 <body>
-<h2>7球控制中心（所有人同步）</h2>
-
+<h2>7球全局控制中心</h2>
 <div id="editList"></div>
-<button onclick="saveAll()">保存并同步所有设备</button>
+<button onclick="saveAll()">保存并同步所有手机</button>
 
 <script>
 const defaultData=[
@@ -28,43 +26,48 @@ const defaultData=[
     {num:'05',name:'选手5',color:'blue'},
     {num:'06',name:'选手6',color:'blue'},
     {num:'07',name:'特别',color:'green'}
-];
+]
 
-function renderEdit(){
-    const list=JSON.parse(localStorage.getItem('ballData')||JSON.stringify(defaultData));
-    const box=document.getElementById('editList');
-    box.innerHTML='';
+function render(){
+    const list=JSON.parse(localStorage.getItem('ballData')||JSON.stringify(defaultData))
+    const box=document.getElementById('editList')
+    box.innerHTML=''
     list.forEach((item,i)=>{
-        const div=document.createElement('div');
-        div.className='item';
+        const div=document.createElement('div')
+        div.className='item'
         div.innerHTML=`
-            第${i+1}球：
-            <input type="text" placeholder="数字" value="${item.num}" class="num${i}">
-            <input type="text" placeholder="名字" value="${item.name}" class="name${i}">
-            <select class="color${i}">
-                <option value="red" ${item.color=='red'?'selected':''}>红</option>
-                <option value="blue" ${item.color=='blue'?'selected':''}>蓝</option>
-                <option value="green" ${item.color=='green'?'selected':''}>绿</option>
-            </select>
-        `;
-        box.appendChild(div);
-    });
+        第${i+1}球：
+        <input type="text" class="num${i}" value="${item.num}" placeholder="数字">
+        <input type="text" class="name${i}" value="${item.name}" placeholder="名字">
+        <select class="color${i}">
+            <option value="red" ${item.color=='red'?'selected':''}>红</option>
+            <option value="blue" ${item.color=='blue'?'selected':''}>蓝</option>
+            <option value="green" ${item.color=='green'?'selected':''}>绿</option>
+        </select>
+        `
+        box.appendChild(div)
+    })
 }
 
 function saveAll(){
-    const arr=[];
+    const arr=[]
     for(let i=0;i<7;i++){
         arr.push({
             num:document.querySelector(`.num${i}`).value||'00',
             name:document.querySelector(`.name${i}`).value||'选手',
             color:document.querySelector(`.color${i}`).value
-        });
+        })
     }
-    localStorage.setItem('ballData',JSON.stringify(arr));
-    alert('同步成功！别人打开页面即可看见！');
+    localStorage.setItem('ballData',JSON.stringify(arr))
+    const dataStr="data:text/json;charset=utf-8,"+encodeURIComponent(JSON.stringify(arr,null,2))
+    const a=document.createElement('a')
+    a.href=dataStr
+    a.download='ball_data.json'
+    a.click()
+    alert('保存成功！请把下载的 ball_data.json 上传到你的网站根目录！\n上传后所有手机立即同步！')
 }
 
-window.onload=renderEdit;
+window.onload=render
 </script>
 </body>
 </html>
