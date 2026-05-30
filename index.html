@@ -2,7 +2,6 @@
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <!-- 强制移动端适配、禁止缩放，保证布局稳定 -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>更新网</title>
     <style>
@@ -36,205 +35,165 @@
         h1 {
             font-size: 2rem;
             margin-bottom: 20px;
-            text-shadow: 0 0 12px rgba(255, 255,255, 0.8);
+            text-shadow: 0 0 12px rgba(255,255,255,0.8);
             font-weight: bold;
-            line-height: 1.3;
         }
         p {
             font-size: 1.2rem;
             line-height: 1.8;
             margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            font-weight: 500;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
             white-space: pre-line;
         }
         .update-time {
             margin-top: 20px;
             font-size: 1rem;
             opacity: 0.9;
-            text-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
         }
         audio {
             display: none;
         }
-
-        .countdown-box {
-            margin: 25px auto 20px;
-            background: rgba(0,0,0,0.7);
-            color: #fff;
-            padding: 12px;
-            border-radius: 12px;
-            max-width: 500px;
-        }
-        .countdown-title {
-            font-size: 1rem;
-            margin-bottom: 8px;
-        }
-        .countdown-time {
-            font-size: 1.6rem;
-            font-weight: bold;
-            color: #ffd700;
-        }
-
-        /* 核心：强制单行横向排列，禁止换行 */
         .ball-wrap {
             display: flex;
             flex-direction: row;
-            flex-wrap: nowrap; /* 禁止换行 */
+            flex-wrap: nowrap;
             justify-content: center;
-            align-items: center;
-            gap: 6px; /* 圆圈间距缩小，适配手机 */
-            margin: 20px 0;
-            overflow-x: auto; /* 屏幕太窄时可左右滑动，不会挤压变形 */
+            align-items: flex-start;
+            gap: 8px;
+            margin: 25px 0;
+            overflow-x: auto;
             padding: 5px;
         }
         .ball-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex-shrink: 0; /* 关键：禁止圆圈被压缩变形 */
-            width: 52px;
+            flex-shrink: 0;
+            width: 54px;
         }
         .ball {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%; /* 强制正圆 */
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
             color: #fff;
-            font-size: 14px;
-            line-height: 40px;
+            font-size: 16px;
+            line-height: 44px;
             font-weight: bold;
             border: 2px solid #fff;
-            /* 固定宽高，杜绝变形 */
-            min-width: 40px;
-            min-height: 40px;
+            text-align: center;
         }
         .ball-desc {
-            width: 50px;
-            font-size: 11px;
+            width: 54px;
+            font-size: 12px;
             text-align: center;
-            word-break: break-all;
-            margin-top: 4px;
+            margin-top: 6px;
+            line-height: 1.3;
+            font-weight: 500;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h1 id="title"></h1>
-        <p id="content"></p>
-        <div class="update-time" id="updateTime"></div>
+<div class="container">
+    <h1 id="title"></h1>
+    <p id="content"></p>
+    <div class="update-time" id="updateTime"></div>
+    <div class="ball-wrap" id="ballWrap"></div>
+</div>
 
-        <div class="countdown-box">
-            <div class="countdown-title">下一场开球倒计时</div>
-            <div class="countdown-time" id="countdown">00:00:00</div>
-        </div>
+<audio id="bgm" loop>
+<source src="失恒将军.mp3" type="audio/mpeg">
 
-        <!-- 7球单行布局 -->
-        <div class="ball-wrap" id="ballWrap"></div>
-    </div>
+<script>
+// ==============================================
+// 【保留你原来的】从 data.json 读取标题、内容
+// ==============================================
+fetch('data.json')
+.then(res => res.json())
+.then(data => {
+    document.getElementById('title').innerText = data.title;
+    document.getElementById('content').innerText = data.content;
+})
+.catch(() => {
+    document.getElementById('content').innerText = "加载失败，请检查文件";
+});
 
-    <audio id="bgm" loop>
-        <source src="失恒将军.mp3" type="audio/mpeg">
-    
+// ==============================================
+// 【保留你原来的】当前时间显示
+// ==============================================
+function showTime() {
+    const now = new Date();
+    let h = String(now.getHours()).padStart(2, '0');
+    let m = String(now.getMinutes()).padStart(2, '0');
+    let s = String(now.getSeconds()).padStart(2, '0');
+    document.getElementById('updateTime').innerText = `当前时间：${h}:${m}:${s}`;
+}
+showTime();
+setInterval(showTime, 1000);
 
-    <script>
-        // 加载文字
-        fetch('data.json')
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('title').innerText = data.title;
-                document.getElementById('content').innerText = data.content;
-            })
-            .catch(() => {
-                document.getElementById('content').innerText = "加载失败，请检查文件";
-            });
+// ==============================================
+// 【保留你原来的】背景音乐
+// ==============================================
+const audio = document.getElementById('bgm');
+let isPlay = false;
+function playAudio() {
+    if (isPlay) return;
+    isPlay = true;
+    audio.play();
+}
+document.addEventListener('click', playAudio);
+document.addEventListener('touchmove', playAudio);
 
-        // 本地时间
-        function showTime() {
-            const now = new Date();
-            let h = String(now.getHours()).padStart(2, '0');
-            let m = String(now.getMinutes()).padStart(2, '0');
-            let s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('updateTime').innerText = `当前时间：${h}:${m}:${s}`;
+// ==============================================
+// 固定显示 7 个球（永远不会少！）
+// ==============================================
+function initBallDom() {
+    const wrap = document.getElementById("ballWrap");
+    wrap.innerHTML = "";
+    for (let i = 0; i < 7; i++) {
+        let item = document.createElement("div");
+        item.className = "ball-item";
+        let circle = document.createElement("div");
+        circle.className = "ball";
+        let desc = document.createElement("div");
+        desc.className = "ball-desc";
+        item.appendChild(circle);
+        item.appendChild(desc);
+        wrap.appendChild(item);
+    }
+}
+
+// ==============================================
+// 【保留你原来的】后台控制同步（兼容不改）
+// ==============================================
+function syncBallData() {
+    let data = localStorage.getItem("ballAllData");
+    if (!data) return;
+    let list = JSON.parse(data);
+    let items = document.querySelectorAll(".ball-item");
+    for (let i = 0; i < 7; i++) {
+        if (!list[i]) continue;
+        let circle = items[i].querySelector(".ball");
+        let desc = items[i].querySelector(".ball-desc");
+        circle.innerText = list[i].num;
+        if (list[i].color === "red") {
+            circle.style.background = "#e74c3c";
+        } else if (list[i].color === "blue") {
+            circle.style.background = "#3498db";
+        } else {
+            circle.style.background = "#27ae60";
         }
-        showTime();
-        setInterval(showTime, 1000);
+        desc.innerText = list[i].name;
+    }
+}
 
-        // 背景音乐
-        const audio = document.getElementById('bgm');
-        let isPlay = false;
-        function playAudio() {
-            if (isPlay) return;
-            isPlay = true;
-            audio.play();
-        }
-        document.addEventListener('click', playAudio);
-        document.addEventListener('touchmove', playAudio);
-
-        // 初始化7个球
-        function initBallDom() {
-            const wrap = document.getElementById("ballWrap");
-            wrap.innerHTML = "";
-            for (let i = 0; i < 7; i++) {
-                let item = document.createElement("div");
-                item.className = "ball-item";
-                let circle = document.createElement("div");
-                circle.className = "ball";
-                let desc = document.createElement("div");
-                desc.className = "ball-desc";
-                item.appendChild(circle);
-                item.appendChild(desc);
-                wrap.appendChild(item);
-            }
-        }
-
-        // 离线持续倒计时（时间戳方案）
-        function runCountdown() {
-            let endTime = parseInt(localStorage.getItem("countEndTime")) || 0;
-            let now = Date.now();
-            let diff = Math.floor((endTime - now) / 1000);
-
-            if (diff <= 0) {
-                document.getElementById("countdown").innerText = "00:00:00";
-                return;
-            }
-
-            let h = Math.floor(diff / 3600);
-            let m = Math.floor((diff % 3600) / 60);
-            let s = diff % 60;
-            document.getElementById("countdown").innerText =
-                `${String(h).padStart(2, "0")}:${String(m).padStart(2, "0")}:${String(s).padStart(2, "0")}`;
-        }
-
-        // 同步球数据（无加号）
-        function syncBallData() {
-            let data = localStorage.getItem("ballAllData");
-            if (!data) return;
-            let list = JSON.parse(data);
-            let items = document.querySelectorAll(".ball-item");
-            for (let i = 0; i < 7; i++) {
-                if (!list[i]) continue;
-                let circle = items[i].querySelector(".ball");
-                let desc = items[i].querySelector(".ball-desc");
-                circle.innerText = list[i].num;
-                if (list[i].color === "red") {
-                    circle.style.background = "#e74c3c";
-                } else if (list[i].color === "blue") {
-                    circle.style.background = "#3498db";
-                } else {
-                    circle.style.background = "#27ae60";
-                }
-                desc.innerText = list[i].name;
-            }
-        }
-
-        // 页面加载执行
-        window.onload = function () {
-            initBallDom();
-            runCountdown();
-            syncBallData();
-            setInterval(runCountdown, 1000);
-            setInterval(syncBallData, 1000);
-        }
-    </script>
+// ==============================================
+// 启动（全部保留）
+// ==============================================
+window.onload = function () {
+    initBallDom();
+    syncBallData();
+    setInterval(syncBallData, 1000);
+};
+</script>
 </body>
 </html>

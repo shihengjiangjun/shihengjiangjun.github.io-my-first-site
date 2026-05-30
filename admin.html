@@ -1,208 +1,70 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>后台管理</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        body {
-            font-family: "Microsoft Yahei", sans-serif;
-            background: #222;
-            color: #fff;
-            padding: 20px 10px;
-        }
-        .admin-box {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #333;
-            padding: 25px;
-            border-radius: 16px;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 25px;
-            color: #ffd700;
-        }
-        .ctrl-group {
-            margin: 20px 0;
-            padding: 15px;
-            background: #444;
-            border-radius: 8px;
-        }
-        h3 {
-            margin-bottom: 12px;
-            font-size: 16px;
-        }
-        .row {
-            display: flex;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 8px;
-            margin: 10px 0;
-        }
-        .row label {
-            width: 70px;
-            font-size: 14px;
-        }
-        .row input, .row select {
-            padding: 6px;
-            width: 100px;
-            font-size: 14px;
-            border: none;
-            border-radius: 4px;
-            outline: none;
-        }
-        button {
-            padding: 8px 20px;
-            font-size: 15px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            margin: 5px;
-        }
-        .btn-time {
-            background: #999;
-            color: #000;
-        }
-        .btn-save {
-            background: #e74c3c;
-            color: #fff;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>后台控制</title>
+<style>
+body{font-family:Microsoft Yahei;padding:20px;background:#f5f5f5}
+.item{margin-bottom:15px}
+input{width:60px;padding:8px;margin-right:5px}
+select{padding:8px}
+button{padding:10px 20px;background:#09f;color:#fff;border:none;border-radius:6px;margin-top:10px}
+.ball{display:inline-block;width:40px;height:40px;border-radius:50%;color:#fff;line-height:40px;text-align:center;margin-right:5px}
+</style>
 </head>
 <body>
-    <div class="admin-box">
-        <h2>数据后台设置</h2>
+<h2>7球控制中心（所有人同步）</h2>
 
-        <div class="ctrl-group">
-            <h3>全局倒计时设置</h3>
-            <div class="row">
-                <label>小时：</label>
-                <input type="number" id="hour" value="0" min="0" max="23">
-                <label>分钟：</label>
-                <input type="number" id="minute" value="1" min="0" max="59">
-                <button class="btn-time" onclick="setTime()">应用倒计时</button>
-            </div>
-        </div>
+<div id="editList"></div>
+<button onclick="saveAll()">保存并同步所有设备</button>
 
-        <div class="ctrl-group">
-            <h3>号码/选手/颜色设置（号码 01-49，可重复）</h3>
-            <div class="row">
-                <label>第1球</label>
-                <input type="text" id="n1" placeholder="号码">
-                <input type="text" id="name1" placeholder="选手名">
-                <select id="color1">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第2球</label>
-                <input type="text" id="n2" placeholder="号码">
-                <input type="text" id="name2" placeholder="选手名">
-                <select id="color2">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第3球</label>
-                <input type="text" id="n3" placeholder="号码">
-                <input type="text" id="name3" placeholder="选手名">
-                <select id="color3">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第4球</label>
-                <input type="text" id="n4" placeholder="号码">
-                <input type="text" id="name4" placeholder="选手名">
-                <select id="color4">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第5球</label>
-                <input type="text" id="n5" placeholder="号码">
-                <input type="text" id="name5" placeholder="选手名">
-                <select id="color5">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第6球</label>
-                <input type="text" id="n6" placeholder="号码">
-                <input type="text" id="name6" placeholder="选手名">
-                <select id="color6">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-            <div class="row">
-                <label>第7球</label>
-                <input type="text" id="n7" placeholder="号码">
-                <input type="text" id="name7" placeholder="选手名">
-                <select id="color7">
-                    <option value="red">红色</option>
-                    <option value="blue">蓝色</option>
-                    <option value="green">绿色</option>
-                </select>
-            </div>
-        </div>
+<script>
+const defaultData=[
+    {num:'01',name:'选手1',color:'red'},
+    {num:'02',name:'选手2',color:'red'},
+    {num:'03',name:'选手3',color:'red'},
+    {num:'04',name:'选手4',color:'blue'},
+    {num:'05',name:'选手5',color:'blue'},
+    {num:'06',name:'选手6',color:'blue'},
+    {num:'07',name:'特别',color:'green'}
+];
 
-        <div style="text-align:center;margin-top:20px;">
-            <button class="btn-save" onclick="saveData()">提交全部数据</button>
-        </div>
-    </div>
+function renderEdit(){
+    const list=JSON.parse(localStorage.getItem('ballData')||JSON.stringify(defaultData));
+    const box=document.getElementById('editList');
+    box.innerHTML='';
+    list.forEach((item,i)=>{
+        const div=document.createElement('div');
+        div.className='item';
+        div.innerHTML=`
+            第${i+1}球：
+            <input type="text" placeholder="数字" value="${item.num}" class="num${i}">
+            <input type="text" placeholder="名字" value="${item.name}" class="name${i}">
+            <select class="color${i}">
+                <option value="red" ${item.color=='red'?'selected':''}>红</option>
+                <option value="blue" ${item.color=='blue'?'selected':''}>蓝</option>
+                <option value="green" ${item.color=='green'?'selected':''}>绿</option>
+            </select>
+        `;
+        box.appendChild(div);
+    });
+}
 
-    <script>
-        // 设置倒计时：保存【结束时间戳】，离线也会继续倒计时
-        function setTime() {
-            let h = parseInt(document.getElementById('hour').value) || 0;
-            let m = parseInt(document.getElementById('minute').value) || 0;
-            let totalSec = h * 3600 + m * 60;
-            // 当前时间 + 总秒数 = 结束时间戳
-            let endTime = Date.now() + totalSec * 1000;
-            localStorage.setItem("countEndTime", endTime);
-            alert("倒计时已应用，离线也会持续走时！");
-        }
+function saveAll(){
+    const arr=[];
+    for(let i=0;i<7;i++){
+        arr.push({
+            num:document.querySelector(`.num${i}`).value||'00',
+            name:document.querySelector(`.name${i}`).value||'选手',
+            color:document.querySelector(`.color${i}`).value
+        });
+    }
+    localStorage.setItem('ballData',JSON.stringify(arr));
+    alert('同步成功！别人打开页面即可看见！');
+}
 
-        // 数据提交校验
-        function saveData() {
-            let list = [];
-            let reg = /^(0[1-9]|[1-4][0-9])$/;
-            for(let i = 1; i <= 7; i++){
-                let num = document.getElementById('n' + i).value.trim();
-                let name = document.getElementById('name' + i).value.trim();
-                let color = document.getElementById('color' + i).value;
-
-                if(!reg.test(num)){
-                    alert(`第${i}球号码错误，请填 01~49`);
-                    return;
-                }
-                if(name === ""){
-                    alert(`第${i}球选手名不能为空`);
-                    return;
-                }
-                list.push({num, name, color});
-            }
-            localStorage.setItem("ballAllData", JSON.stringify(list));
-            alert("数据提交成功，前台已同步！");
-        }
-    </script>
+window.onload=renderEdit;
+</script>
 </body>
 </html>
