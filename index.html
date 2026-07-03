@@ -3,103 +3,88 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>更新网</title>
+    <title>94552网</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: "Microsoft Yahei", sans-serif;
+            background-color: #ffffff;
+            color: #000000;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: url("失恒将军.jpg") no-repeat center center / cover;
-            background-color: #222;
-            color: #000;
+            overflow-y: auto;
         }
+
         .container {
-            background: rgba(255, 255, 255, 0.8);
-            backdrop-filter: blur(6px);
-            -webkit-backdrop-filter: blur(6px);
-            padding: 45px 35px;
-            border-radius: 24px;
-            max-width: 80%;
+            width: 100%;
+            max-width: 750px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        .red-title {
+            background-color: #e6212a;
+            color: #ffffff;
             text-align: center;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-        h1 {
-            font-size: 3rem;
-            margin-bottom: 25px;
-            text-shadow: 0 0 12px rgba(255, 255,255, 0.8);
+            padding: 12px 0;
+            font-size: 22px;
             font-weight: bold;
-            line-height: 1.3;
+            margin: 10px 0;
+            border-radius: 4px;
         }
-        p {
-            font-size: 1.5rem;
-            line-height: 1.8;
-            margin-bottom: 15px;
-            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
-            font-weight: 500;
-            white-space: pre-line;
+
+        .content-box {
+            padding: 0 10px 10px 10px;
+            line-height: 2;
+            font-size: 18px;
         }
-        .update-time {
-            margin-top: 35px;
-            font-size: 1.1rem;
-            opacity: 0.9;
-            text-shadow: 0 0 8px rgba(0, 0, 0, 0.95);
-        }
-        audio {
-            display: none;
+
+        .period-blue {
+            color: #0044cc;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 id="title"></h1>
-        <p id="content"></p>
-        <div class="update-time" id="updateTime"></div>
+
+        <!-- 第一块红色标题 -->
+        <div class="red-title">澳门失恒♈平特一肖♈</div>
+
+        <!-- 平特一肖文字内容 -->
+        <div class="content-box">
+            <div><span class="period-blue">184期:</span>平特一肖【小猪】开0000准</div>
+            <div><span class="period-blue">183期:</span>平特一肖【小羊】开羊24准</div>
+            <div><span class="period-blue">182期:</span>平特一肖【小狗】开牛09准</div>
+        </div>
+
+        <!-- 第二块红色标题 -->
+        <div class="red-title">澳门失恒♈五肖五码♈</div>
+
+        <!-- 五肖五码内容 -->
+        <div class="content-box">
+            <div><span class="period-blue">184期【五肖五码】</span>开？00准</div>
+            <div>蛇02-龙15-鸡10-羊24-兔16</div>
+
+            <div><span class="period-blue">183期【五肖五码】</span>开24【羊】准</div>
+            <div>蛇14-鼠31-猴23-羊24-马01</div>
+
+            <div><span class="period-blue">182期【五肖五码】</span>开41【虎】准</div>
+            <div>蛇02-兔04-鼠19-猪08-虎41</div>
+        </div>
+
+        <!-- 以后继续加更多板块，就按照这个格式：
+        <div class="red-title">新的标题</div>
+        <div class="content-box">
+            <div>内容1</div>
+            <div>内容2</div>
+        </div>
+        -->
+
     </div>
-
-    <audio id="bgm" loop>
-        <source src="失恒将军.mp3" type="audio/mpeg">
-    
-
-    <script>
-        // 读取 data.json 数据
-        fetch('data.json')
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('title').innerText = data.title;
-                document.getElementById('content').innerText = data.content;
-            })
-            .catch(() => {
-                document.getElementById('content').innerText = "加载失败，请检查文件";
-            });
-
-        // 实时时间（时:分:秒）
-        function showTime() {
-            const now = new Date();
-            let h = String(now.getHours()).padStart(2, '0');
-            let m = String(now.getMinutes()).padStart(2, '0');
-            let s = String(now.getSeconds()).padStart(2, '0');
-            document.getElementById('updateTime').innerText = `当前时间：${h}:${m}:${s}`;
-        }
-        showTime();
-        setInterval(showTime, 1000);
-
-        // 点击/滑动播放音乐，仅触发一次
-        const audio = document.getElementById('bgm');
-        let isPlay = false;
-        function playAudio() {
-            if (isPlay) return;
-            isPlay = true;
-            audio.play();
-        }
-        document.addEventListener('click', playAudio);
-        document.addEventListener('touchmove', playAudio);
-    </script>
 </body>
 </html>
