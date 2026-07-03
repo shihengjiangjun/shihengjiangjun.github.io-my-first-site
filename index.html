@@ -1,61 +1,58 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>94552网</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: "Microsoft Yahei", sans-serif;
-            background-color: #ffffff;
-            color: #000000;
-            min-height: 100vh;
-            overflow-y: auto;
-        }
-        /* 顶部滑动横幅 */
-        .top-banner {
-             width: 100%;
-             height: 120px;
-             background: url("失恒宝宝.jpg") center/cover no-repeat;
-             position: sticky;
-             top: 0;
-             z-index: 9;
-         }
-        .container {
-            width: 100%;
-            max-width: 750px;
-            margin: 0 auto;
-            padding: 10px;
-        }
-
-        .red-title {
-            background-color: #e6212a;
-            color: #ffffff;
-            text-align: center;
-            padding: 12px 0;
-            font-size: 22px;
-            font-weight: bold;
-            margin: 10px 0;
-            border-radius: 4px;
-        }
-
-        .content-box {
-            padding: 0 10px 10px 10px;
-            line-height: 2;
-            font-size: 18px;
-        }
-
-        .period-blue {
-            color: #0044cc;
-            font-weight: bold;
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>94552网</title>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: "Microsoft Yahei", sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+/* 顶部横幅：跟随滚动，始终固定在顶端 */
+.top-banner {
+    width: 100%;
+    height: 120px;
+    background: url("失恒宝宝.jpg") center/cover no-repeat;
+    /* 关键属性：滚动时一直粘在顶部 */
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+.container {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 10px;
+}
+.red-title {
+    background-color: #e6212a;
+    color: #ffffff;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+.content-box {
+    padding: 0 10px 10px 10px;
+    line-height: 2;
+    font-size: 18px;
+}
+.period-blue {
+    color: #0044cc;
+    font-weight: bold;
+}
+</style>
 </head>
 <body>
     <div class="container">
