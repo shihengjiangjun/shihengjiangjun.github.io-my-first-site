@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>94552网</title>
+<style>
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    font-family: "Microsoft Yahei", sans-serif;
+    background-color: #ffffff;
+    color: #000000;
+    min-height: 100vh;
+    overflow-y: auto;
+}
+/* 顶部横幅：跟随滚动，始终固定在顶端 */
+.top-banner {
+    width: 100%;
+    height: 120px;
+    background: url("SHMOD.jpg") center/cover no-repeat;
+    /* 关键属性：滚动时一直粘在顶部 */
+    position: sticky;
+    top: 0;
+    z-index: 99;
+}
+.container {
+    width: 100%;
+    max-width: 750px;
+    margin: 0 auto;
+    padding: 10px;
+}
+.red-title {
+    background-color: #e6212a;
+    color: #ffffff;
+    text-align: center;
+    padding: 12px 0;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 10px 0;
+    border-radius: 4px;
+}
+.content-box {
+    padding: 0 10px 10px 10px;
+    line-height: 2;
+    font-size: 18px;
+}
+.line-divider{
+    height: 1px;
+    background: #ccc;
+    margin: 6px 0;
+}
+.period-blue {
+    color: #0044cc;
+    font-weight: bold;
+}
+</style>
+</head>
+<body>
+<div class="top-banner"></div>
+    <div class="container">
+
+        <!-- 第一块红色标题 -->
+        <div class="red-title">澳门失恒♈平特一肖♈</div>
+
+        <!-- 平特一肖文字内容 -->
+        <div class="content-box">
+            <div><span class="period-blue">185期:</span>平特一肖【小狗】0000准</div>
+            <div class="line-divider"></div>
+            <div><span class="period-blue">184期:</span>平特一肖【小猪】开猪20准</div>
+            <div class="line-divider"></div>
+            <div><span class="period-blue">183期:</span>平特一肖【小羊】开羊24准</div>
+            <div class="line-divider"></div>
+            <div><span class="period-blue">182期:</span>平特一肖【小狗】开牛09准</div>
+            <div class="line-divider"></div>
+        </div>
+
+        <!-- 第二块红色标题 -->
+        <div class="red-title">澳门失恒♈五肖五码♈</div>
+
+        <!-- 五肖五码内容 -->
+        <div class="content-box">
+            <div><span class="period-blue">185期【五肖五码】</span>？00准</div>
+            <div class="line-divider"> </div>
+            <div>龙15-兔04-狗09-猴23-马37</div>
+            <div class="line-divider"></div>
+          
+              <div><span class="period-blue">184期【五肖五码】</span>01【马】错</div>
+            <div class="line-divider"></div>
+            <div>蛇02-龙15-鸡10-羊24-兔16</div>
+            <div class="line-divider"></div>
+
+            <div><span class="period-blue">183期【五肖五码】</span>开24【羊】准</div>
+            <div class="line-divider"></div>
+            <div>蛇14-鼠31-猴23-羊24-马01</div>
+            <div class="line-divider"></div>
+
+            <div><span class="period-blue">182期【五肖五码】</span>开41【虎】准</div>
+            <div class="line-divider"></div>
+            <div>蛇02-兔04-鼠19-猪08-虎41</div>
+            <div class="line-divider"></div>
+        </div>
+       
+        <!-- 第三块红色标题 -->
+        
+         <div class="red-title">澳门失恒♈每日降赔♈</div>
+
+        <!-- 五肖五码内容 -->
+        <div class="content-box">
+        <div><span class="period-blue">185期【每日降赔】</span>0000准</div>
+            <div class="line-divider"></div>
+            <div>正在更新中……</div>
+            <div class="line-divider"></div>
+
+            <div><span class="period-blue">184期【每日降赔】</span>01【马】错</div>
+            <div class="line-divider"></div>
+            <div>14.15.18.19.21.41</div>
+            <div class="line-divider"></div>
+
+            <div><span class="period-blue">183期【每日降赔】</span>24【羊】错</div>
+            <div class="line-divider"></div>
+            <div>10.14.15.18.19.21.26</div>
+            <div class="line-divider"></div>
+
+            <div><span class="period-blue">182期【每日降赔】</span>开41【虎】准</div>
+            <div class="line-divider"></div>
+            <div>03.06.24.28.41.44</div>
+            <div class="line-divider"></div>
+        </div>
+
+        <!-- 以后继续加更多板块，就按照这个格式：
+        <div class="red-title">新的标题</div>
+        <div class="content-box">
+            <div>内容1</div>
+            <div>内容2</div>
+        </div>
+        -->
+
+    </div>
+</body>
+</html>
